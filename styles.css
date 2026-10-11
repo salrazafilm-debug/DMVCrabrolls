@@ -447,3 +447,5 @@ nav a{letter-spacing:.4px}
 .hh-inner{gap:10px}
 .hh-logo{width:clamp(250px,30vw,420px)}
 @media(max-width:600px){.hh-logo{width:min(78vw,340px)}}
+/* Intro only: the logo stays still after it lands */
+.hh-logo img,.hh-shadow{animation:none}
