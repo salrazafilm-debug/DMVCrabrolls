@@ -54,16 +54,25 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
   window.addEventListener('resize', queueFade);
   fade();
 
-  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const now = new Date();
   const games = [...document.querySelectorAll('.game-list li[data-date]')];
   let next = null;
   games.forEach(li => {
     const [y, m, d] = li.dataset.date.split('-').map(Number);
-    const when = new Date(y, m - 1, d);
-    const past = when < today;
+    // A game stops being "next" once it kicks off; with no set time it lasts through that day.
+    const t = /(\d+):(\d+)\s*(AM|PM)/i.exec(li.dataset.time || '');
+    const start = t ? new Date(y, m - 1, d, (Number(t[1]) % 12) + (/pm/i.test(t[3]) ? 12 : 0), Number(t[2])) : new Date(y, m - 1, d + 1);
+    const past = start <= now;
     li.classList.toggle('is-past', past);
     if (!past && !next) next = li;
   });
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const ordinal = n => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] || 'th');
+  if (next) {
+    const [, nm, nd] = next.dataset.date.split('-').map(Number);
+    const label = `${MONTHS[nm - 1]} ${ordinal(nd)} ${next.dataset.opp}`.toUpperCase();
+    document.querySelectorAll('.pride-next').forEach(el => { el.textContent = label; });
+  }
   games.forEach(li => { if (li !== next) li.classList.add('later'); });
   const toggle = document.querySelector('.schedule-toggle'), list = document.querySelector('#game-list');
   if (toggle && list) toggle.addEventListener('click', () => {
