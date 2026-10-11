@@ -4,7 +4,7 @@ Website for **DMV Crabrolls**: home of the world famous crabrolls at Section 141
 
 Instagram [@thedmvcrabrolls](https://www.instagram.com/thedmvcrabrolls/) · TikTok [@dmvcrabrolls](https://www.tiktok.com/@dmvcrabrolls)
 
-Plain HTML, CSS and JavaScript. No build step and no dependencies. Fonts are system fonts.
+Plain HTML, CSS and JavaScript. No build step and no dependencies. Fonts are self-hosted in `assets/fonts/` (Anton for headlines, Barlow and Barlow Condensed for text and labels, Permanent Marker for the handwritten note).
 
 ## Run it locally
 
@@ -21,11 +21,12 @@ python3 -m http.server 8000
 | Colors, type, layout | `styles.css` (brand colors are the variables at the top) |
 | The floating game-day ticket | `ticket.css`, `ticket.js` |
 | Menu dialogs, catering form, photo viewer, nav | `app.js` |
-| Photos, logo lockup, flags | `assets/` |
+| Photos, hero images (`hero.webp` desktop, `hero-mobile.webp` phone), flags, fonts | `assets/` |
 
 ## Good to know
 
 - **Catering form:** it doesn't send anything. It builds the inquiry text for the visitor to copy or download and share with the team.
+- **Hero motto:** the "Best food ★ In the landdd ★ DMV" line is live text in `index.html`. It was removed from the hero image itself, so edit it in the HTML.
 - **Gallery:** add a photo by copying one of the `.moment` buttons in `index.html` and pointing `data-photo` and the `<img>` at a new file in `assets/`.
 - **Images** are compressed WebP and JPEG (about 4 MB in total). Keep new ones small, since many visitors are on cell data at the stadium.
 - **The ticket** is fan artwork and says so on the page.
