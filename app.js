@@ -128,3 +128,19 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
   mark();
   window.addEventListener('resize', mark);
 })();
+
+/* Fun fact: a tab pokes out at the bottom of the owner section and opens as you scroll to it */
+(() => {
+  const banner = document.querySelector('#fact-banner');
+  if (!banner) return;
+  const tab = banner.querySelector('.fact-tab');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const setOpen = open => { banner.classList.toggle('is-open', open); tab.setAttribute('aria-expanded', String(open)); };
+  banner.classList.add('peek');
+  setOpen(false);
+  tab.addEventListener('click', () => { banner.dataset.manual = '1'; setOpen(!banner.classList.contains('is-open')); });
+  if (reduced || !('IntersectionObserver' in window)) { setOpen(true); return; }
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !banner.dataset.manual) setOpen(true);
+  }, { rootMargin: '0px 0px -38% 0px', threshold: 0.2 }).observe(banner);
+})();
