@@ -64,6 +64,15 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
     li.classList.toggle('is-past', past);
     if (!past && !next) next = li;
   });
+  games.forEach(li => { if (li !== next) li.classList.add('later'); });
+  const toggle = document.querySelector('.schedule-toggle'), list = document.querySelector('#game-list');
+  if (toggle && list) toggle.addEventListener('click', () => {
+    const open = !list.classList.contains('expanded');
+    list.classList.toggle('expanded', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.querySelector('span').textContent = open ? '↑' : '↓';
+    toggle.firstChild.textContent = open ? 'Show next game only ' : 'See all games ';
+  });
   if (next) {
     next.classList.add('is-next');
     document.querySelector('#ng-date').textContent = next.querySelector('time').textContent;

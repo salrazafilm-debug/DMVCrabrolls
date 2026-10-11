@@ -288,3 +288,43 @@ nav a{letter-spacing:.4px}
 .follow-buttons .button{min-width:220px}
 .follow-buttons .outline{background:transparent}
 @media(max-width:600px){.schedule{padding:60px 0}.game-list li{grid-template-columns:1fr auto;gap:4px 14px}.game-list .game-opp{grid-column:1/-1;grid-row:2;font-size:15px}.game-list time{font-size:22px}.game-list .game-time{font-size:13px}.follow-buttons .button{min-width:0;flex:1 1 150px}.follow-row{margin-top:34px}}
+
+/* ===== Round 4: standalone photos with text beside them, compact schedule at the bottom ===== */
+.owner-portrait::before,.team-solo::before{display:none}
+.owner-portrait,.team-solo{transform:none;width:100%;max-width:340px;justify-self:start;padding:12px 12px 20px;box-shadow:12px 12px 0 var(--gold)}
+.owner-portrait{background:var(--cream);color:var(--navy);transform:rotate(-2deg)}
+.team-solo{background:var(--navy);color:var(--gold);transform:rotate(2deg);box-shadow:12px 12px 0 var(--red)}
+.owner-grid,.team-grid2{grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:clamp(28px,4vw,64px)}
+.owner-grid>.owner-copy,.team-grid2>.team-copy2{align-self:center}
+.owner-portrait img,.team-solo img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
+.team-solo figcaption{font-family:var(--display);font-size:20px;letter-spacing:1px;text-align:center;padding-top:14px}
+.owner-portrait figcaption{padding-top:14px}
+.schedule{padding:56px 0 60px}
+.schedule-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.schedule-head .eyebrow{margin:0}
+.schedule-toggle{min-height:44px;padding:9px 22px;font-size:18px}
+.game-list{max-width:none}
+.game-list li{padding:14px 4px}
+.game-list li.later{display:none}
+.game-list.expanded li.later{display:grid}
+.game-list li.is-past{display:none}
+.game-list li.is-next{opacity:1}
+.schedule .small-note{margin-top:14px}
+.follow-row{margin-top:26px}
+@media(max-width:600px){
+.meet-title{font-size:44px;margin-bottom:22px}
+.owner-grid,.team-grid2{grid-template-columns:minmax(0,40%) minmax(0,1fr);gap:16px;align-items:start}
+.owner-portrait,.team-solo{max-width:none;padding:7px 7px 12px;box-shadow:6px 6px 0 var(--gold)}
+.team-solo{box-shadow:6px 6px 0 var(--red)}
+.owner-portrait figcaption,.team-solo figcaption{font-size:12px;padding-top:8px;letter-spacing:.5px}
+.owner-name{font-size:24px;margin-bottom:10px}
+.owner-copy>p:not(.owner-name){font-size:13px;line-height:1.5}
+.owner-fact{padding:12px;margin-top:14px}
+.owner-fact p{font-size:20px}
+.owner-fact small{font-size:11px}
+.team-copy2 .team-sub{font-size:22px;margin-top:0}
+.team-copy2 .team-text{font-size:13px;line-height:1.5;margin-top:10px}
+.schedule-toggle{min-height:40px;font-size:16px;padding:8px 16px}
+}
+.game-list li{padding-left:16px;padding-right:16px}
+@media(max-width:600px){.game-list li{padding-left:14px;padding-right:8px}}
