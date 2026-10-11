@@ -36,3 +36,94 @@ $('#photo-dialog').addEventListener('keydown', event => { if(event.key === 'Arro
 
 const banner = document.querySelector(".pride-strip"), bannerPause = document.querySelector(".pride-pause");
 bannerPause.addEventListener("click", () => { const paused = banner.classList.toggle("is-paused"); bannerPause.setAttribute("aria-pressed", String(paused)); bannerPause.setAttribute("aria-label", paused ? "Play banner" : "Pause banner"); bannerPause.textContent = paused ? "▶" : "Ⅱ"; });
+
+/* Round 3: scroll fade, next home game, schedule highlight, Big 3 spotlight */
+(() => {
+  const hero = document.querySelector('.hero');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let frame = 0;
+  const fade = () => {
+    frame = 0;
+    const distance = Math.max(1, hero.offsetHeight * 0.6);
+    const amount = Math.min(1, Math.max(0, window.scrollY / distance));
+    hero.style.setProperty('--fade', amount.toFixed(3));
+    hero.classList.toggle('is-faded', amount > 0.5);
+  };
+  const queueFade = () => { if (!frame) frame = requestAnimationFrame(fade); };
+  window.addEventListener('scroll', queueFade, { passive: true });
+  window.addEventListener('resize', queueFade);
+  fade();
+
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const games = [...document.querySelectorAll('.game-list li[data-date]')];
+  let next = null;
+  games.forEach(li => {
+    const [y, m, d] = li.dataset.date.split('-').map(Number);
+    const when = new Date(y, m - 1, d);
+    const past = when < today;
+    li.classList.toggle('is-past', past);
+    if (!past && !next) next = li;
+  });
+  if (next) {
+    next.classList.add('is-next');
+    document.querySelector('#ng-date').textContent = next.querySelector('time').textContent;
+    document.querySelector('#ng-opp').textContent = next.dataset.opp;
+    document.querySelector('#ng-time').textContent = next.dataset.time;
+  } else {
+    document.querySelector('#ng-date').textContent = 'Season wrap-up';
+    document.querySelector('#ng-opp').textContent = 'Check back for the next game';
+  }
+
+  const track = document.querySelector('.menu .food-grid');
+  if (!track) return;
+  const cards = [...track.querySelectorAll('.food-card')];
+  const phone = matchMedia('(max-width: 600px)');
+  const pause = document.querySelector('.carousel-pause');
+  const interval = 4800;
+  let timer = 0, index = 0, stopped = false, onScreen = false;
+
+  const mark = () => {
+    const mid = track.getBoundingClientRect().left + track.clientWidth / 2;
+    let best = 0, bestGap = Infinity;
+    cards.forEach((card, i) => {
+      const rect = card.getBoundingClientRect();
+      const gap = Math.abs(rect.left + rect.width / 2 - mid);
+      if (gap < bestGap) { bestGap = gap; best = i; }
+    });
+    index = best;
+    cards.forEach((card, i) => card.classList.toggle('is-center', i === best));
+  };
+  const go = i => {
+    index = (i + cards.length) % cards.length;
+    const card = cards[index];
+    const left = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
+    track.scrollTo({ left, behavior: reduced.matches ? 'auto' : 'smooth' });
+  };
+  const halt = () => { clearInterval(timer); timer = 0; };
+  const start = () => {
+    if (timer || stopped || !onScreen || !phone.matches || reduced.matches) return;
+    timer = setInterval(() => go(index + 1), interval);
+  };
+  const setPause = isStopped => {
+    stopped = isStopped;
+    if (stopped) halt(); else start();
+    if (pause) {
+      pause.setAttribute('aria-pressed', String(stopped));
+      pause.textContent = stopped ? 'Play the spotlight' : 'Pause the spotlight';
+    }
+  };
+
+  let scrollFrame = 0;
+  track.addEventListener('scroll', () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(() => { scrollFrame = 0; mark(); }); }, { passive: true });
+  track.addEventListener('pointerdown', () => { if (!stopped) setPause(true); });
+  if (pause) pause.addEventListener('click', () => setPause(!stopped));
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => {
+      onScreen = entries[0].isIntersecting;
+      if (onScreen) start(); else halt();
+    }, { threshold: 0.6 }).observe(track);
+  }
+  phone.addEventListener('change', () => { halt(); if (phone.matches) start(); });
+  mark();
+  window.addEventListener('resize', mark);
+})();

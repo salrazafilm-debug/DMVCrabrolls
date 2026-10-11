@@ -209,3 +209,82 @@ nav a{letter-spacing:.4px}
 .site-footer{padding:44px 0 20px}
 .footer-top{gap:26px}
 }
+
+/* ===== Round 3: side-by-side Meet the Owner / Team, next-game banner, scroll fade, Big 3 spotlight, tilt, schedule ===== */
+
+/* Meet the owner and team: big title on top, a smaller photo on one side and the words on the other */
+.meet-title{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(56px,8.4vw,132px);line-height:.92;letter-spacing:-.5px;margin-bottom:clamp(28px,3.5vw,48px)}
+.owner .meet-title{color:#fff;text-shadow:4px 6px 0 var(--red)}
+.team .meet-title{color:var(--navy);text-shadow:4px 6px 0 var(--gold)}
+.owner{display:block;padding-top:95px;padding-bottom:95px}
+.owner-grid{display:grid;grid-template-columns:minmax(0,.36fr) minmax(0,.64fr);gap:clamp(30px,4.5vw,70px);align-items:center}
+.owner-portrait{max-width:330px;width:100%}
+.owner-name{font-family:var(--display);font-weight:400;font-size:clamp(34px,3.6vw,50px);line-height:1;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.owner-copy>p:not(.owner-name){max-width:560px}
+.owner-copy .owner-fact{max-width:560px}
+.team-grid2{display:grid;grid-template-columns:minmax(0,.36fr) minmax(0,.64fr);gap:clamp(30px,4.5vw,70px);align-items:center}
+.team-grid2 .team-solo{max-width:330px;width:100%;justify-self:start;transform:rotate(-2deg)}
+.team-copy2 .team-sub{margin-top:0;font-size:clamp(30px,3.6vw,54px)}
+.team-copy2 .team-text{max-width:520px}
+
+/* Next home game banner: sits over the top of the hero and fades out with the hero on scroll */
+.hero{--fade:0}
+.next-game{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 18px;padding:12px 24px;background:var(--gold);color:var(--navy);font-family:var(--label);font-weight:700;text-transform:uppercase;letter-spacing:1.4px;font-size:clamp(14px,1.3vw,18px);opacity:calc(1 - var(--fade));transition:background .2s}
+.next-game:hover{background:#ffd95c}
+.next-game .ng-label{background:var(--navy);color:var(--gold);padding:3px 10px;border-radius:99px;font-size:.85em;letter-spacing:1.6px}
+.next-game .ng-detail{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px}
+.next-game b{font-weight:700}
+.next-game .ng-where{font-size:.9em;text-decoration:underline;text-underline-offset:4px}
+.hero-content{opacity:calc(1 - var(--fade))}
+.hero::before{opacity:calc(1 - var(--fade))}
+.hero.is-faded .hero-content,.hero.is-faded .next-game{pointer-events:none}
+@media(min-width:801px){.hero-actions .outline{flex-basis:100%}}
+
+/* The Big 3 phone spotlight: a swipeable carousel with the middle card lit up */
+.carousel-controls{display:none}
+@media(max-width:600px){
+.menu .food-grid{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:auto;scrollbar-width:none;padding:34px 0 26px;margin:0 auto;width:100%;position:relative;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.menu .food-grid::-webkit-scrollbar{display:none}
+.menu .food-card{flex:0 0 62%;width:62%;scroll-snap-align:center;padding:0 8px;transform:scale(.86);opacity:.5;transition:transform .45s ease,opacity .45s ease;transform-origin:center center}
+.menu .food-grid::before,.menu .food-grid::after{content:'';flex:0 0 19%}
+.menu .food-card.is-center{transform:scale(1.22);opacity:1;z-index:2}
+.menu .food-card.is-center .food-photo{box-shadow:0 0 0 3px var(--gold),0 0 34px 6px rgba(255,202,39,.55),0 18px 30px -8px rgba(3,23,44,.6)}
+.menu .food-photo{aspect-ratio:3/4;height:auto;background:#132637}
+.menu .food-description{padding:14px 0 0;opacity:0;transition:opacity .45s ease}
+.menu .food-card.is-center .food-description{opacity:1}
+.menu .food-description h3{font-size:22px;line-height:1.05;margin:0 0 6px}
+.menu .food-description p{font-size:13px;line-height:1.35;min-height:0;max-width:none}
+.menu .food-label{font-size:11px;padding:3px 9px;top:10px;left:10px}
+.carousel-controls{display:flex;justify-content:center;margin-top:4px}
+.carousel-pause{background:transparent;border:1px solid var(--navy);color:var(--navy);border-radius:99px;font-family:var(--label);font-weight:700;text-transform:uppercase;letter-spacing:1.2px;font-size:13px;padding:8px 18px;min-height:38px}
+.carousel-pause:hover{background:var(--navy);color:#fff}
+.menu-note{margin-top:14px}
+}
+@media(prefers-reduced-motion:reduce){.menu .food-card{transition:none}}
+
+/* Ticket tilt by phone motion */
+.entry-pass .entry-pass-tilt{display:none;background:#071727b8;border:1px solid #c9a86985;border-radius:99px;color:#f4e7d0;font-size:12px;padding:8px 16px;margin:18px 0 0;cursor:pointer;min-height:36px;font-family:var(--label);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.entry-pass .entry-pass-tilt:not([hidden]){display:inline-block}
+.entry-pass .entry-pass-touch-hint{display:none}
+@media(hover:none){.entry-pass .entry-pass-touch-hint{display:inline}.entry-pass .entry-pass-ticket{transition:transform 260ms ease-out}}
+@media(prefers-reduced-motion:reduce){.entry-pass .entry-pass-tilt{display:none!important}}
+
+/* Schedule and follow */
+.schedule{padding:95px 0;background:#071e33;color:#fff;border-top:6px solid var(--gold)}
+.schedule .eyebrow{color:var(--gold)}
+.schedule h2{font-size:clamp(48px,6vw,96px);margin-bottom:34px}
+.schedule h2 em{color:var(--gold)}
+.game-list{list-style:none;margin:0;padding:0;border-top:3px solid var(--gold);max-width:860px}
+.game-list li{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.6fr) auto;gap:20px;align-items:baseline;padding:18px 4px;border-bottom:1px solid #ffffff26;font-size:clamp(18px,1.7vw,22px)}
+.game-list time{font-family:var(--display);font-size:clamp(22px,2.4vw,32px);text-transform:uppercase;letter-spacing:.5px}
+.game-list .game-opp{font-family:var(--body);font-weight:600;color:#eef2f6}
+.game-list .game-time{font-family:var(--label);font-weight:700;letter-spacing:1px;color:var(--gold);text-transform:uppercase;text-align:right}
+.game-list li.is-past{opacity:.42}
+.game-list li.is-next{background:#ffca2714;box-shadow:inset 6px 0 0 var(--gold)}
+.schedule .small-note{color:#b6c4d0;max-width:620px;margin-top:18px}
+.follow-row{margin-top:48px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
+.follow-row .eyebrow{margin:0}
+.follow-buttons{display:flex;flex-wrap:wrap;gap:14px}
+.follow-buttons .button{min-width:220px}
+.follow-buttons .outline{background:transparent}
+@media(max-width:600px){.schedule{padding:60px 0}.game-list li{grid-template-columns:1fr auto;gap:4px 14px}.game-list .game-opp{grid-column:1/-1;grid-row:2;font-size:15px}.game-list time{font-size:22px}.game-list .game-time{font-size:13px}.follow-buttons .button{min-width:0;flex:1 1 150px}.follow-row{margin-top:34px}}

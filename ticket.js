@@ -40,3 +40,46 @@
   });
   reducedMotion.addEventListener('change', reset);
 })();
+
+/* Tilt the ticket with the phone's gyroscope (touch screens only; iPhones ask for permission first) */
+(() => {
+  const section = document.querySelector('#entry-pass');
+  if (!section) return;
+  const ticket = section.querySelector('.entry-pass-ticket');
+  const tiltButton = section.querySelector('.entry-pass-tilt');
+  const motionButton = section.querySelector('.entry-pass-motion');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const clamp = (value, limit) => Math.max(-limit, Math.min(limit, value));
+  let listening = false;
+  let paused = false;
+  const onTilt = event => {
+    if (paused || reducedMotion.matches || event.gamma == null) return;
+    const ry = clamp(event.gamma * 0.14, 8);
+    const rx = clamp((event.beta - 50) * -0.12, 6);
+    ticket.style.setProperty('--ticket-rx', `${rx.toFixed(2)}deg`);
+    ticket.style.setProperty('--ticket-ry', `${ry.toFixed(2)}deg`);
+  };
+  const listen = () => {
+    if (listening) return;
+    listening = true;
+    window.addEventListener('deviceorientation', onTilt);
+    if (tiltButton) tiltButton.hidden = true;
+  };
+  if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+    if (tiltButton && matchMedia('(hover: none)').matches) {
+      tiltButton.hidden = false;
+      tiltButton.addEventListener('click', async () => {
+        try {
+          if (await DeviceOrientationEvent.requestPermission() === 'granted') listen();
+        } catch { /* permission not available here; the ticket stays still */ }
+      });
+    }
+  } else if ('DeviceOrientationEvent' in window && matchMedia('(hover: none)').matches) {
+    listen();
+  }
+  motionButton.addEventListener('click', () => {
+    paused = motionButton.getAttribute('aria-pressed') === 'true';
+    if (paused) { ticket.style.setProperty('--ticket-rx', '0deg'); ticket.style.setProperty('--ticket-ry', '0deg'); }
+  });
+  reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) { ticket.style.setProperty('--ticket-rx', '0deg'); ticket.style.setProperty('--ticket-ry', '0deg'); } });
+})();
