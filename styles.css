@@ -375,10 +375,6 @@ nav a{letter-spacing:.4px}
 .team-copy2 .meet-title{text-shadow:2px 3px 0 var(--gold)}
 .owner,.team{padding-top:44px;padding-bottom:44px}
 }
-.find.stadium-find{background:linear-gradient(rgba(3,23,44,.84),rgba(3,23,44,.74)),url('assets/stadium-golden-hour.webp') center/cover no-repeat;text-align:center}
-.stadium-find .find-grid>div{margin:0 auto;max-width:720px}
-.stadium-find .location-details{justify-content:center}
-.stadium-find .small-note{margin-left:auto;margin-right:auto}
 @media(max-width:800px){.hero-actions{width:auto;justify-content:center}.hero-actions .button{min-width:260px}}
 @media(max-width:600px){.owner-grid,.team-grid2{align-items:start}}
 
@@ -407,4 +403,20 @@ nav a{letter-spacing:.4px}
 .owner-name{font-size:22px;margin-bottom:8px}
 .team-copy2 .team-sub{font-size:20px}
 .team-copy2 .team-text{font-size:13px}
+}
+
+/* ===== Round 8: restore the original Find us look; steadier Big 3 carousel ===== */
+.stadium-find .location-details{flex-wrap:wrap;gap:24px 55px}
+.stadium-find .next-game-info span{color:var(--gold);font-size:12px;letter-spacing:2px}
+.stadium-find .next-game-info strong{display:block;font-family:var(--display);font-size:28px;font-weight:400;color:#fff;text-transform:uppercase}
+.stadium-find .next-game-info p{font-size:14px;color:#e2e8ee;font-weight:600}
+@media(max-width:600px){
+.menu .food-grid{position:relative;z-index:5;padding:52px 0 40px;scroll-snap-type:x mandatory;touch-action:pan-x pan-y;overscroll-behavior-x:contain}
+.menu .food-card{position:relative;z-index:1;transition:none;will-change:transform,opacity;scroll-snap-stop:always;transform:scale(.86);opacity:.5}
+.menu .food-card.is-center{z-index:2;transform:scale(1.16);opacity:1}
+.menu .food-photo{position:relative;z-index:1}
+.menu .food-photo img{position:relative;z-index:1;pointer-events:auto}
+.menu .food-photo::after{pointer-events:none}
+.menu .food-card.is-center .food-photo{box-shadow:0 0 0 3px var(--gold),0 0 26px 4px rgba(255,202,39,.5)}
+.menu .carousel-controls{position:relative;z-index:6}
 }

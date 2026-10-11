@@ -74,6 +74,11 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
     toggle.firstChild.textContent = open ? 'Show next game only ' : 'See all games ';
   });
   if (next) next.classList.add('is-next');
+  const findDate = document.querySelector('#find-next-date'), findOpp = document.querySelector('#find-next-opp');
+  if (next && findDate && findOpp) {
+    findDate.textContent = next.querySelector('time').textContent;
+    findOpp.textContent = `${next.dataset.opp} · ${next.dataset.time}`;
+  }
 
   const track = document.querySelector('.menu .food-grid');
   if (!track) return;
@@ -81,14 +86,21 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
   const phone = matchMedia('(max-width: 600px)');
   const pause = document.querySelector('.carousel-pause');
   const interval = 4800;
-  let timer = 0, index = 0, stopped = false, onScreen = false;
+  let timer = 0, resumeTimer = 0, index = 0, userPaused = false, onScreen = false;
 
+  // Size and fade each card from its distance to the middle, so nothing snaps or pops while it moves.
   const mark = () => {
-    const mid = track.getBoundingClientRect().left + track.clientWidth / 2;
+    if (!phone.matches) {
+      cards.forEach(card => { card.style.transform = ''; card.style.opacity = ''; card.classList.remove('is-center'); });
+      return;
+    }
+    const mid = track.clientWidth / 2;
     let best = 0, bestGap = Infinity;
     cards.forEach((card, i) => {
-      const rect = card.getBoundingClientRect();
-      const gap = Math.abs(rect.left + rect.width / 2 - mid);
+      const gap = Math.abs(card.offsetLeft + card.offsetWidth / 2 - track.scrollLeft - mid);
+      const d = Math.min(1, gap / card.offsetWidth);
+      card.style.transform = `scale(${(1.16 - 0.3 * d).toFixed(3)})`;
+      card.style.opacity = (1 - 0.5 * d).toFixed(3);
       if (gap < bestGap) { bestGap = gap; best = i; }
     });
     index = best;
@@ -102,29 +114,28 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
   };
   const halt = () => { clearInterval(timer); timer = 0; };
   const start = () => {
-    if (timer || stopped || !onScreen || !phone.matches || reduced.matches) return;
+    halt();
+    if (userPaused || !onScreen || !phone.matches || reduced.matches) return;
     timer = setInterval(() => go(index + 1), interval);
   };
-  const setPause = isStopped => {
-    stopped = isStopped;
-    if (stopped) halt(); else start();
-    if (pause) {
-      pause.setAttribute('aria-pressed', String(stopped));
-      pause.textContent = stopped ? 'Play the spotlight' : 'Pause the spotlight';
-    }
-  };
+  // A touch only pauses the show for a few seconds; the Pause button stops it until Play.
+  const touched = () => { halt(); clearTimeout(resumeTimer); };
+  const released = () => { clearTimeout(resumeTimer); resumeTimer = setTimeout(start, 5000); };
+  ['pointerdown', 'touchstart', 'wheel'].forEach(type => track.addEventListener(type, touched, { passive: true }));
+  ['pointerup', 'pointercancel', 'touchend', 'touchcancel'].forEach(type => track.addEventListener(type, released, { passive: true }));
+  if (pause) pause.addEventListener('click', () => {
+    userPaused = !userPaused;
+    pause.setAttribute('aria-pressed', String(userPaused));
+    pause.textContent = userPaused ? 'Play the spotlight' : 'Pause the spotlight';
+    if (userPaused) { halt(); clearTimeout(resumeTimer); } else start();
+  });
 
   let scrollFrame = 0;
   track.addEventListener('scroll', () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(() => { scrollFrame = 0; mark(); }); }, { passive: true });
-  track.addEventListener('pointerdown', () => { if (!stopped) setPause(true); });
-  if (pause) pause.addEventListener('click', () => setPause(!stopped));
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(entries => {
-      onScreen = entries[0].isIntersecting;
-      if (onScreen) start(); else halt();
-    }, { threshold: 0.6 }).observe(track);
-  }
-  phone.addEventListener('change', () => { halt(); if (phone.matches) start(); });
+    new IntersectionObserver(entries => { onScreen = entries[0].isIntersecting; if (onScreen) start(); else halt(); }, { threshold: 0.25 }).observe(track);
+  } else { onScreen = true; start(); }
+  phone.addEventListener('change', () => { mark(); start(); });
   mark();
   window.addEventListener('resize', mark);
 })();
