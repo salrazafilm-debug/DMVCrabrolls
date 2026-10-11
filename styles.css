@@ -167,3 +167,45 @@ nav a{letter-spacing:.4px}
 @media(max-width:800px){.moment{flex-basis:calc(50% - 14px)}.moments{padding-top:60px;padding-bottom:70px}.moments-heading{flex-direction:column;align-items:flex-start;gap:24px}.moments .eyebrow span{border-left:0;padding-left:0}}
 @media(max-width:600px){.moment{flex-basis:100%}.film-strip{height:42px;background-size:34px 9px,34px 9px;background-position:5px 6px,5px 27px}}
 .catering .catering-note p{font-family:var(--hand);font-weight:400;line-height:1.4}
+
+/* ===== Phone layout: compact, desktop-style grids so more fits on each screen ===== */
+@media(max-width:600px){
+.wrap{padding-left:16px;padding-right:16px}
+/* The Big 3: three across, like desktop */
+.menu{padding-bottom:40px}
+.menu .section-intro{margin:8px 0 22px;font-size:18px}
+.food-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.food-photo{aspect-ratio:3/4;height:auto}
+.food-label{top:6px;left:5px;padding:2px 6px;font-size:9px;letter-spacing:.3px}
+.food-description{padding:10px 0 0}
+.food-description h3{font-size:15px;line-height:1.1;margin:0 0 6px}
+.food-description p{font-size:11.5px;line-height:1.35;min-height:0}
+.menu-note{margin:26px 16px 0;font-size:12px}
+/* People: smaller portraits */
+.owner{padding-top:44px;padding-bottom:44px;gap:26px}
+.owner-portrait{max-width:72%;margin-inline:auto}
+.owner-copy h2{font-size:48px}
+.owner-fact{margin-top:20px;padding:18px}
+.team{padding:48px 0}
+.team-split{gap:26px}
+.team-solo{max-width:74%}
+.team-split h2{font-size:clamp(54px,16vw,80px)}
+.team-sub{margin-top:18px}
+/* Sections: tighter rhythm */
+.entry-pass{min-height:0;padding:44px 16px 30px}
+.entry-pass .entry-pass-float{margin:30px auto 18px}
+.find.stadium-find{padding:48px 0}
+.catering{padding-top:44px;padding-bottom:50px;gap:30px}
+.moments{padding-top:44px;padding-bottom:48px}
+.moments-heading{margin-bottom:28px;gap:16px}
+.moments h2{font-size:clamp(52px,15vw,78px)}
+/* The Moments: two across */
+.moments-grid{gap:12px}
+.moment{flex:0 0 calc(50% - 6px)}
+.moment img{aspect-ratio:3/4;object-fit:cover}
+.moment>span{font-size:12px;line-height:1.25;letter-spacing:.6px;padding:10px 9px;gap:6px}
+.moment b{font-size:13px}
+.truck-coming{padding:32px 0}
+.site-footer{padding:44px 0 20px}
+.footer-top{gap:26px}
+}
