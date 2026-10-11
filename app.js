@@ -73,15 +73,7 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
     toggle.querySelector('span').textContent = open ? '↑' : '↓';
     toggle.firstChild.textContent = open ? 'Show next game only ' : 'See all games ';
   });
-  if (next) {
-    next.classList.add('is-next');
-    document.querySelector('#ng-date').textContent = next.querySelector('time').textContent;
-    document.querySelector('#ng-opp').textContent = next.dataset.opp;
-    document.querySelector('#ng-time').textContent = next.dataset.time;
-  } else {
-    document.querySelector('#ng-date').textContent = 'Season wrap-up';
-    document.querySelector('#ng-opp').textContent = 'Check back for the next game';
-  }
+  if (next) next.classList.add('is-next');
 
   const track = document.querySelector('.menu .food-grid');
   if (!track) return;

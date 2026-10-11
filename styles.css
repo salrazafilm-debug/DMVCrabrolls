@@ -362,3 +362,22 @@ nav a{letter-spacing:.4px}
 .game-list li{border-radius:2px}
 .schedule-toggle{transition:background .2s,color .2s}
 .schedule-toggle:hover{background:var(--gold);color:var(--navy)}
+
+/* ===== Round 6: no top banner, centered Find us, titles beside the photos ===== */
+.next-game{display:none}
+.owner-copy .meet-title,.team-copy2 .meet-title{font-size:clamp(48px,6.2vw,100px);line-height:.92;margin-bottom:22px}
+.owner-grid,.team-grid2{grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:clamp(30px,5vw,80px);align-items:center}
+.owner-portrait,.team-solo{max-width:420px}
+.owner{padding-top:80px;padding-bottom:80px}.team{padding:80px 0}
+@media(max-width:600px){
+.owner-grid,.team-grid2{grid-template-columns:minmax(0,41%) minmax(0,1fr);gap:16px}
+.owner-copy .meet-title,.team-copy2 .meet-title{font-size:clamp(30px,9.4vw,40px);margin-bottom:12px;text-shadow:2px 3px 0 var(--red)}
+.team-copy2 .meet-title{text-shadow:2px 3px 0 var(--gold)}
+.owner,.team{padding-top:44px;padding-bottom:44px}
+}
+.find.stadium-find{background:linear-gradient(rgba(3,23,44,.84),rgba(3,23,44,.74)),url('assets/stadium-golden-hour.webp') center/cover no-repeat;text-align:center}
+.stadium-find .find-grid>div{margin:0 auto;max-width:720px}
+.stadium-find .location-details{justify-content:center}
+.stadium-find .small-note{margin-left:auto;margin-right:auto}
+@media(max-width:800px){.hero-actions{width:auto;justify-content:center}.hero-actions .button{min-width:260px}}
+@media(max-width:600px){.owner-grid,.team-grid2{align-items:start}}
