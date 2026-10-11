@@ -39,7 +39,7 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
 
 /* Round 3: scroll fade, next home game, schedule highlight, Big 3 spotlight */
 (() => {
-  const hero = document.querySelector('.hero');
+  const hero = document.querySelector('#home');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let frame = 0;
   const fade = () => {
