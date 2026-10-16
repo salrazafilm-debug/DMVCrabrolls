@@ -164,3 +164,28 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
     if (entries[0].isIntersecting && !banner.dataset.manual) setOpen(true);
   }, { rootMargin: '0px 0px -38% 0px', threshold: 0.2 }).observe(banner);
 })();
+
+/* Intro video: plays on every visit, holds on its last frame, then the rest of the site fades in */
+(() => {
+  const root = document.documentElement;
+  const video = document.querySelector('.intro-video');
+  const skip = document.querySelector('.intro-skip');
+  let done = false;
+  const toEnd = () => { if (video && video.duration) { video.pause(); video.currentTime = Math.max(0, video.duration - 0.04); } };
+  const reveal = () => {
+    if (done) return;
+    done = true;
+    root.classList.remove('intro-playing');
+    root.classList.add('intro-done');
+    if (skip) skip.hidden = true;
+  };
+  if (!video) { reveal(); return; }
+  const finishNow = () => { if (video.readyState >= 1) toEnd(); else video.addEventListener('loadedmetadata', toEnd, { once: true }); reveal(); };
+  video.addEventListener('ended', reveal);
+  video.addEventListener('error', finishNow, true);
+  if (skip) skip.addEventListener('click', finishNow);
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { finishNow(); return; }
+  const attempt = video.play();
+  if (attempt && attempt.catch) attempt.catch(finishNow);
+  setTimeout(() => { if (!done) finishNow(); }, 15000);
+})();

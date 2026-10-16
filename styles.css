@@ -449,3 +449,17 @@ nav a{letter-spacing:.4px}
 @media(max-width:600px){.hh-logo{width:min(78vw,340px)}}
 /* Intro only: the logo stays still after it lands */
 .hh-logo img,.hh-shadow{animation:none}
+
+/* ===== Round 10: intro video as the home page ===== */
+.intro-hero{position:relative;background:#050d1c;line-height:0}
+.intro-video{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:calc(100svh - 76px);object-fit:cover;background:#050d1c}
+.intro-skip{position:absolute;right:16px;bottom:16px;line-height:1.2;background:rgba(3,23,44,.7);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:99px;padding:8px 16px;font-family:var(--label);font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:13px;transition:opacity .4s}
+html:not(.intro-playing) .intro-skip{opacity:0;pointer-events:none}
+html.intro-playing,html.intro-playing body{overflow:hidden}
+main>*:not(#home),.site-footer{transition:opacity 1.1s ease,transform 1.1s ease}
+html.intro-playing main>*:not(#home),html.intro-playing .site-footer{opacity:0;transform:translateY(24px);pointer-events:none}
+html.intro-done .menu{transition-delay:.05s}
+@media(max-width:800px){.intro-video{max-height:none}}
+@media(prefers-reduced-motion:reduce){main>*:not(#home),.site-footer{transition:none}}
+.intro-hero{padding-bottom:30px}
+.intro-skip{bottom:46px}
