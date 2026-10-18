@@ -170,22 +170,36 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
   const root = document.documentElement;
   const video = document.querySelector('.intro-video');
   const skip = document.querySelector('.intro-skip');
+  const tap = document.querySelector('.intro-tap');
   let done = false;
-  const toEnd = () => { if (video && video.duration) { video.pause(); video.currentTime = Math.max(0, video.duration - 0.04); } };
+  const toEnd = () => { if (video.duration) { video.pause(); video.currentTime = Math.max(0, video.duration - 0.04); } };
   const reveal = () => {
     if (done) return;
     done = true;
     root.classList.remove('intro-playing');
     root.classList.add('intro-done');
     if (skip) skip.hidden = true;
+    if (tap) tap.hidden = true;
   };
-  if (!video) { reveal(); return; }
-  const finishNow = () => { if (video.readyState >= 1) toEnd(); else video.addEventListener('loadedmetadata', toEnd, { once: true }); reveal(); };
+  // Skip, a playback error, or reduced motion: jump to the last frame and show the site.
+  const finishNow = () => {
+    if (video.readyState >= 1) toEnd(); else video.addEventListener('loadedmetadata', toEnd, { once: true });
+    reveal();
+  };
+  video.muted = true;
+  video.playsInline = true;
   video.addEventListener('ended', reveal);
   video.addEventListener('error', finishNow, true);
   if (skip) skip.addEventListener('click', finishNow);
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) { finishNow(); return; }
-  const attempt = video.play();
-  if (attempt && attempt.catch) attempt.catch(finishNow);
-  setTimeout(() => { if (!done) finishNow(); }, 15000);
+  // Autoplay can be blocked (iPhone Low Power Mode, some in-app browsers). Then show a tap-to-play button
+  // over the first frame instead of skipping the intro.
+  const play = () => {
+    const attempt = video.play();
+    if (attempt && attempt.then) attempt.then(() => { if (tap) tap.hidden = true; }).catch(() => { if (tap && !done) tap.hidden = false; });
+  };
+  if (tap) tap.addEventListener('click', () => { tap.hidden = true; video.currentTime = 0; play(); });
+  if (video.readyState >= 2) play(); else video.addEventListener('canplay', play, { once: true });
+  // Safety net for a stalled download: after 25 s with no picture, show the site.
+  setTimeout(() => { if (!done && video.readyState < 2) finishNow(); }, 25000);
 })();

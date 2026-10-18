@@ -463,3 +463,16 @@ html.intro-done .menu{transition-delay:.05s}
 @media(prefers-reduced-motion:reduce){main>*:not(#home),.site-footer{transition:none}}
 .intro-hero{padding-bottom:30px}
 .intro-skip{bottom:46px}
+
+/* ===== Round 11: the video is the whole first screen; header and site appear after it ends ===== */
+.intro-hero{height:100vh;height:100svh;max-height:none;padding-top:0;padding-bottom:0}
+.intro-video{width:100%;height:100%;max-height:none;aspect-ratio:auto;object-fit:cover;object-position:center}
+header{transition:transform .9s ease,opacity .9s ease}
+html.intro-playing header{transform:translateY(-100%);opacity:0;pointer-events:none}
+html.intro-done header{transform:none;opacity:1}
+.intro-tap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;background:var(--gold);color:var(--navy);border:0;border-radius:99px;padding:14px 28px;font-family:var(--display);font-size:22px;letter-spacing:1px;text-transform:uppercase;min-height:56px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.intro-hero{overflow:hidden}
+@media(max-width:800px){.intro-video{max-height:none}}
+html.intro-playing header{position:absolute;top:0;left:0;right:0}
+@media(max-width:800px){.intro-video{object-fit:contain}}
+@media(max-width:800px){.intro-video{object-fit:cover;object-position:50% 50%}}
