@@ -52,10 +52,13 @@
   const clamp = (value, limit) => Math.max(-limit, Math.min(limit, value));
   let listening = false;
   let paused = false;
+  // Measure from wherever the phone is held when tilt starts, so any comfortable angle works.
+  let base = null;
   const onTilt = event => {
     if (paused || reducedMotion.matches || event.gamma == null) return;
-    const ry = clamp(event.gamma * 0.14, 8);
-    const rx = clamp((event.beta - 50) * -0.12, 6);
+    if (!base) base = { beta: event.beta, gamma: event.gamma };
+    const ry = clamp((event.gamma - base.gamma) * 0.45, 14);
+    const rx = clamp((event.beta - base.beta) * -0.35, 12);
     ticket.style.setProperty('--ticket-rx', `${rx.toFixed(2)}deg`);
     ticket.style.setProperty('--ticket-ry', `${ry.toFixed(2)}deg`);
   };
