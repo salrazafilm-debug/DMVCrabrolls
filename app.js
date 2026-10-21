@@ -165,41 +165,25 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
   }, { rootMargin: '0px 0px -38% 0px', threshold: 0.2 }).observe(banner);
 })();
 
-/* Intro video: plays on every visit, holds on its last frame, then the rest of the site fades in */
+/* Intro video: autoplays on every visit, holds on its last frame, and the site is visible from the start */
 (() => {
-  const root = document.documentElement;
   const video = document.querySelector('.intro-video');
   const skip = document.querySelector('.intro-skip');
-  const tap = document.querySelector('.intro-tap');
-  let done = false;
-  const toEnd = () => { if (video.duration) { video.pause(); video.currentTime = Math.max(0, video.duration - 0.04); } };
-  const reveal = () => {
-    if (done) return;
-    done = true;
-    root.classList.remove('intro-playing');
-    root.classList.add('intro-done');
-    if (skip) skip.hidden = true;
-    if (tap) tap.hidden = true;
-  };
-  // Skip, a playback error, or reduced motion: jump to the last frame and show the site.
-  const finishNow = () => {
-    if (video.readyState >= 1) toEnd(); else video.addEventListener('loadedmetadata', toEnd, { once: true });
-    reveal();
-  };
+  if (!video) return;
   video.muted = true;
   video.playsInline = true;
-  video.addEventListener('ended', reveal);
-  video.addEventListener('error', finishNow, true);
+  const hold = () => { if (video.duration) { video.pause(); video.currentTime = Math.max(0, video.duration - 0.04); } };
+  const finishNow = () => { if (video.readyState >= 1) hold(); else video.addEventListener('loadedmetadata', hold, { once: true }); };
   if (skip) skip.addEventListener('click', finishNow);
+  video.addEventListener('ended', hold);
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) { finishNow(); return; }
-  // Autoplay can be blocked (iPhone Low Power Mode, some in-app browsers). Then show a tap-to-play button
-  // over the first frame instead of skipping the intro.
+  // If the browser holds back autoplay, start the video on the visitor's first touch, click or scroll. No button.
   const play = () => {
     const attempt = video.play();
-    if (attempt && attempt.then) attempt.then(() => { if (tap) tap.hidden = true; }).catch(() => { if (tap && !done) tap.hidden = false; });
+    if (attempt && attempt.catch) attempt.catch(() => {
+      const start = () => { video.play().catch(() => {}); ['pointerdown', 'touchstart', 'scroll', 'keydown'].forEach(t => removeEventListener(t, start, true)); };
+      ['pointerdown', 'touchstart', 'scroll', 'keydown'].forEach(t => addEventListener(t, start, { capture: true, passive: true, once: true }));
+    });
   };
-  if (tap) tap.addEventListener('click', () => { tap.hidden = true; video.currentTime = 0; play(); });
   if (video.readyState >= 2) play(); else video.addEventListener('canplay', play, { once: true });
-  // Safety net for a stalled download: after 25 s with no picture, show the site.
-  setTimeout(() => { if (!done && video.readyState < 2) finishNow(); }, 25000);
 })();
