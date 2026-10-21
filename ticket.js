@@ -57,8 +57,8 @@
   const onTilt = event => {
     if (paused || reducedMotion.matches || event.gamma == null) return;
     if (!base) base = { beta: event.beta, gamma: event.gamma };
-    const ry = clamp((event.gamma - base.gamma) * 0.45, 14);
-    const rx = clamp((event.beta - base.beta) * -0.35, 12);
+    const ry = clamp((event.gamma - base.gamma) * 1.25, 150);
+    const rx = clamp((event.beta - base.beta) * -1, 75);
     ticket.style.setProperty('--ticket-rx', `${rx.toFixed(2)}deg`);
     ticket.style.setProperty('--ticket-ry', `${ry.toFixed(2)}deg`);
   };

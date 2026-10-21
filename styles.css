@@ -490,3 +490,5 @@ html.intro-playing,html.intro-playing body{overflow:auto}
 main>*:not(#home),.site-footer{transition:none}
 .intro-hero{min-height:0}
 html.intro-playing .intro-hero{min-height:0;display:block}
+/* Stronger phone tilt: quicker response so the ticket follows the phone */
+@media(hover:none){.entry-pass .entry-pass-ticket{transition:transform 90ms linear;will-change:transform}}
