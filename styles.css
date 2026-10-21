@@ -476,3 +476,10 @@ html.intro-done header{transform:none;opacity:1}
 html.intro-playing header{position:absolute;top:0;left:0;right:0}
 @media(max-width:800px){.intro-video{object-fit:contain}}
 @media(max-width:800px){.intro-video{object-fit:cover;object-position:50% 50%}}
+
+/* ===== Round 12: phone shows the video at full width in 16:9, so the rest of the site sits below it ===== */
+@media(max-width:800px){
+.intro-hero{height:auto;min-height:0;display:block}
+.intro-video{height:auto;width:100%;aspect-ratio:16/9;object-fit:contain;background:#050d1c}
+html.intro-playing .intro-hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center}
+}
