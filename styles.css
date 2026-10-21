@@ -483,3 +483,11 @@ html.intro-playing header{position:absolute;top:0;left:0;right:0}
 .intro-video{height:auto;width:100%;aspect-ratio:16/9;object-fit:contain;background:#050d1c}
 html.intro-playing .intro-hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center}
 }
+
+/* ===== Round 13: the site is visible from the start; the video is just the top of the page ===== */
+html.intro-playing header{position:sticky;top:env(safe-area-inset-top,0px);transform:none;opacity:1;pointer-events:auto}
+html.intro-playing main>*:not(#home),html.intro-playing .site-footer{opacity:1;transform:none;pointer-events:auto}
+html.intro-playing,html.intro-playing body{overflow:auto}
+main>*:not(#home),.site-footer{transition:none}
+.intro-hero{min-height:0}
+html.intro-playing .intro-hero{min-height:0;display:block}
