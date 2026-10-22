@@ -492,3 +492,10 @@ main>*:not(#home),.site-footer{transition:none}
 html.intro-playing .intro-hero{min-height:0;display:block}
 /* Stronger phone tilt: quicker response so the ticket follows the phone */
 @media(hover:none){.entry-pass .entry-pass-ticket{transition:transform 90ms linear;will-change:transform}}
+
+/* ===== Round 14: desktop video sized so the Big 3 shows below it on the first screen ===== */
+@media(min-width:801px){
+.intro-hero{height:auto;min-height:0;display:flex;justify-content:center;padding:0;background:#050d1c}
+.intro-video{width:min(100%,calc(56svh * 16 / 9));height:auto;aspect-ratio:16/9;max-height:none;object-fit:cover;flex:0 0 auto}
+html.intro-playing .intro-hero{min-height:0;display:flex}
+}
