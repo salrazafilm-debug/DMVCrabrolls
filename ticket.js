@@ -68,7 +68,9 @@
     window.addEventListener('deviceorientation', onTilt);
     if (tiltButton) tiltButton.hidden = true;
   };
-  if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+  // Phones: no tilt. The ticket hovers in place instead.
+  const touchOnly = matchMedia('(hover: none)').matches;
+  if (touchOnly) { /* skip sensor setup */ } else if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
     if (tiltButton && matchMedia('(hover: none)').matches) {
       tiltButton.hidden = false;
       tiltButton.addEventListener('click', async () => {
@@ -77,8 +79,6 @@
         } catch { /* permission not available here; the ticket stays still */ }
       });
     }
-  } else if ('DeviceOrientationEvent' in window && matchMedia('(hover: none)').matches) {
-    listen();
   }
   motionButton.addEventListener('click', () => {
     paused = motionButton.getAttribute('aria-pressed') === 'true';

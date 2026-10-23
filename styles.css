@@ -589,3 +589,9 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 @keyframes fs-hover{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @media(prefers-reduced-motion:reduce){.fs-food-mob .fs-slide img{animation:none}}
 @media(min-width:801px){.fs-food-desk>.fs-slide{position:absolute;inset:0;height:auto}.fs-food-desk>.fs-slide img{position:absolute;inset:0;width:100%;height:100%}}
+
+/* Round 20: no ticket tilt on phones; the ticket hovers instead */
+@media(hover:none){
+.entry-pass .entry-pass-tilt{display:none!important}
+.entry-pass .entry-pass-ticket{transform:none!important;transition:none}
+}
