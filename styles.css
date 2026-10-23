@@ -595,3 +595,4 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 .entry-pass .entry-pass-tilt{display:none!important}
 .entry-pass .entry-pass-ticket{transform:none!important;transition:none}
 }
+@media(min-width:801px){.fs-food-desk{max-width:none;width:100%}}
