@@ -187,3 +187,41 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
   };
   if (video.readyState >= 2) play(); else video.addEventListener('canplay', play, { once: true });
 })();
+
+/* Find us: live next home game from the schedule, updated every minute; food slides crossfade every 5 seconds */
+(() => {
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const ordinal = n => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] || 'th');
+  const games = [...document.querySelectorAll('.game-list li[data-date]')];
+  const dateEl = document.querySelector('#find-next-date'), oppEl = document.querySelector('#find-next-opp'), timeEl = document.querySelector('#find-next-time');
+  const pride = document.querySelectorAll('.pride-next');
+  const startOf = li => {
+    const [y, m, d] = li.dataset.date.split('-').map(Number);
+    const t = /(\d+):(\d+)\s*(AM|PM)/i.exec(li.dataset.time || '');
+    return t ? new Date(y, m - 1, d, (Number(t[1]) % 12) + (/pm/i.test(t[3]) ? 12 : 0), Number(t[2])) : new Date(y, m - 1, d + 1);
+  };
+  const refresh = () => {
+    const now = new Date();
+    const next = games.find(li => startOf(li) > now) || null;
+    if (!next) return;
+    const [, nm, nd] = next.dataset.date.split('-').map(Number);
+    if (dateEl) dateEl.textContent = next.querySelector('time').textContent;
+    if (oppEl) oppEl.textContent = next.dataset.opp;
+    if (timeEl) timeEl.textContent = next.dataset.time;
+    const label = `${MONTHS[nm - 1]} ${ordinal(nd)} ${next.dataset.opp}`.toUpperCase();
+    pride.forEach(el => { el.textContent = label; });
+  };
+  refresh();
+  setInterval(refresh, 60000);
+
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('.fs-food').forEach(box => {
+    const slides = [...box.querySelectorAll('.fs-slide')];
+    let i = 0;
+    setInterval(() => {
+      slides[i].classList.remove('on');
+      i = (i + 1) % slides.length;
+      slides[i].classList.add('on');
+    }, 5000);
+  });
+})();

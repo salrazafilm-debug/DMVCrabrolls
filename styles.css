@@ -499,3 +499,40 @@ html.intro-playing .intro-hero{min-height:0;display:block}
 .intro-video{width:min(100%,calc(56svh * 16 / 9));height:auto;aspect-ratio:16/9;max-height:none;object-fit:cover;flex:0 0 auto}
 html.intro-playing .intro-hero{min-height:0;display:flex}
 }
+
+/* ===== Round 15: Find us graphic, live next game, food crossfade ===== */
+.find-showcase{background:linear-gradient(#071e33,#0a2440);color:#fff;text-align:center;padding-bottom:40px}
+.find-showcase .sr-only{position:absolute}
+.fs-info{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:1100px;margin:0 auto;padding:44px 24px 26px;gap:0}
+.fs-cell{display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 18px;border-left:2px solid rgba(255,202,39,.45)}
+.fs-cell:first-child{border-left:0}
+.fs-cell svg{width:46px;height:46px;color:#fff;margin-bottom:8px}
+.fs-cell strong{font-family:var(--display);font-weight:400;font-size:clamp(22px,2.6vw,38px);line-height:1.02;text-transform:uppercase;letter-spacing:.5px}
+.fs-cell span{font-size:clamp(14px,1.3vw,18px);color:#e2e8ee;font-weight:600}
+.fs-cell small{font-family:var(--label);font-weight:700;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-size:14px}
+.fs-next strong{color:#fff}
+.fs-food{position:relative;overflow:hidden;width:100%;margin:0 auto}
+.fs-food::before{content:'';position:absolute;inset:0 0 auto;height:22%;z-index:1;background:linear-gradient(#071e33,transparent);pointer-events:none}
+.fs-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.3s ease}
+.fs-slide.on{opacity:1}
+.fs-slide img{display:block;width:100%;height:auto}
+.fs-food-desk{display:block;aspect-ratio:1536/778;max-width:1536px}
+.fs-food-desk .fs-slide img{margin-top:-16%}
+.fs-food-mob{display:none;aspect-ratio:1319/1418}
+.fs-food-mob .fs-slide img{margin-top:-27%}
+.fs-food-desk{position:relative}
+.fs-actions{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:-6px;padding:0 20px}
+.fs-actions .small-note{color:#b6c4d0;margin:0}
+.find-showcase .button{background:var(--gold);color:var(--navy)}
+@media(max-width:800px){
+.fs-food-desk{display:none}
+.fs-food-mob{display:block}
+}
+@media(max-width:600px){
+.fs-info{padding:30px 10px 18px}
+.fs-cell{padding:0 8px}
+.fs-cell svg{width:34px;height:34px}
+.fs-cell span{font-size:13px}
+.fs-cell small{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.fs-slide{transition:none}}
