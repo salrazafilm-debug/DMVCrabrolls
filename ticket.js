@@ -3,7 +3,6 @@
   if (!section) return;
   const link = section.querySelector('.entry-pass-link');
   const ticket = section.querySelector('.entry-pass-ticket');
-  const motionButton = section.querySelector('.entry-pass-motion');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let paused = false;
   let frame = 0;
@@ -31,13 +30,6 @@
   link.addEventListener('pointerleave', reset);
   link.addEventListener('pointercancel', reset);
   link.addEventListener('blur', reset);
-  motionButton.addEventListener('click', () => {
-    paused = !paused;
-    section.classList.toggle('is-still', paused);
-    motionButton.setAttribute('aria-pressed', String(paused));
-    motionButton.textContent = paused ? 'Resume motion' : 'Pause motion';
-    reset();
-  });
   reducedMotion.addEventListener('change', reset);
 })();
 
@@ -47,7 +39,6 @@
   if (!section) return;
   const ticket = section.querySelector('.entry-pass-ticket');
   const tiltButton = section.querySelector('.entry-pass-tilt');
-  const motionButton = section.querySelector('.entry-pass-motion');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const clamp = (value, limit) => Math.max(-limit, Math.min(limit, value));
   let listening = false;

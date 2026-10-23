@@ -596,3 +596,5 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 .entry-pass .entry-pass-ticket{transform:none!important;transition:none}
 }
 @media(min-width:801px){.fs-food-desk{max-width:none;width:100%}}
+/* Round 21: no pause button; the ticket always floats */
+.entry-pass .entry-pass-float{animation:entry-pass-bob 6s ease-in-out infinite}
