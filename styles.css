@@ -573,3 +573,19 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 @media(max-width:800px){.fs-info{padding:5% 3% 0}.fs-cell{gap:.2em}.fs-cell svg{width:1.9em;height:1.9em}.fs-cell strong{font-size:clamp(13px,4vw,20px)}.fs-cell span{font-size:clamp(10px,3vw,14px)}.fs-cell small{font-size:10px}.fs-next .fn-date{font-size:clamp(15px,5vw,24px)}}
 .find-showcase{padding-bottom:0}
 .fs-food{background:#071e33}
+
+/* Round 19: desktop food fills the screen; phone food hovers gently; info sits higher */
+@media(min-width:801px){
+.fs-food-desk{height:100svh;min-height:560px;max-height:none}
+.fs-food-desk .fs-slide img{height:100%;width:100%;object-fit:cover;object-position:center 60%}
+.fs-food-desk .fs-slide{height:100%}
+.fs-info{padding-top:1.6%}
+}
+@media(max-width:800px){
+.fs-info{padding-top:2%}
+.fs-food-mob{padding:0 0 10px}
+.fs-food-mob .fs-slide img{animation:fs-hover 5s ease-in-out infinite}
+}
+@keyframes fs-hover{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media(prefers-reduced-motion:reduce){.fs-food-mob .fs-slide img{animation:none}}
+@media(min-width:801px){.fs-food-desk>.fs-slide{position:absolute;inset:0;height:auto}.fs-food-desk>.fs-slide img{position:absolute;inset:0;width:100%;height:100%}}
