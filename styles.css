@@ -550,3 +550,33 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 @media(max-width:800px){.fs-food-desk{display:none}.fs-food-mob{display:grid}}
 .find-showcase{padding-bottom:40px}
 .fs-next-line{margin-bottom:22px}
+
+/* Round 17: the calendar block in the graphic is covered by a navy card with the live next game */
+.fs-food{container-type:inline-size}
+.fn-card{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:linear-gradient(rgba(7,30,51,.92),rgba(7,30,51,.82));border:1px solid rgba(255,202,39,.45);border-radius:6px;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:1.2cqw;z-index:2}
+.fn-card svg{width:9cqw;height:9cqw;color:#fff;margin-bottom:1cqw}
+.fn-card small{font-family:var(--label);font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-size:2.4cqw}
+.fn-card .fn-date{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:4.6cqw;line-height:1;margin:1cqw 0}
+.fn-card .fn-opp{font-family:var(--body);font-weight:600;font-size:2.6cqw;color:#e2e8ee}
+.fn-card .fn-time{font-family:var(--body);font-weight:600;font-size:2.4cqw;color:#e2e8ee}
+.fn-desk{left:63.1%;top:1.76%;width:12.4%;height:21.5%}
+.fn-mob{left:68.3%;top:1.24%;width:20.9%;height:18.4%}
+.fn-mob .fn-date{font-size:6.4cqw}
+.fn-mob svg{width:12cqw;height:12cqw}
+.fn-mob small{font-size:3.2cqw}
+.fn-mob .fn-opp,.fn-mob .fn-time{font-size:3.4cqw}
+@media(max-width:800px){.fn-desk{display:none}}
+@media(min-width:801px){.fn-mob{display:none}}
+/* fit the live card inside the calendar block on each size */
+.fn-card{padding:.5cqw;gap:0}
+.fn-card svg{width:3.4cqw;height:3.4cqw;margin-bottom:.4cqw}
+.fn-card small{font-size:1.25cqw;letter-spacing:.14em}
+.fn-card .fn-date{font-size:2.9cqw;margin:.3cqw 0;line-height:.95}
+.fn-card .fn-opp{font-size:1.65cqw;line-height:1.2}
+.fn-card .fn-time{font-size:1.55cqw;line-height:1.2}
+.fn-mob svg{width:6cqw;height:6cqw}
+.fn-mob small{font-size:2.1cqw}
+.fn-mob .fn-date{font-size:4.9cqw}
+.fn-mob .fn-opp,.fn-mob .fn-time{font-size:2.5cqw}
+.fn-desk .fn-date{font-size:2.45cqw}
+.fn-mob .fn-date{font-size:4.2cqw}

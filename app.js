@@ -205,9 +205,9 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
     const next = games.find(li => startOf(li) > now) || null;
     if (!next) return;
     const [, nm, nd] = next.dataset.date.split('-').map(Number);
-    if (dateEl) dateEl.textContent = next.querySelector('time').textContent;
-    if (oppEl) oppEl.textContent = next.dataset.opp;
-    if (timeEl) timeEl.textContent = next.dataset.time;
+    document.querySelectorAll('.fn-date').forEach(el => { el.textContent = next.querySelector('time').textContent; });
+    document.querySelectorAll('.fn-opp').forEach(el => { el.textContent = next.dataset.opp; });
+    document.querySelectorAll('.fn-time').forEach(el => { el.textContent = next.dataset.time; });
     const label = `${MONTHS[nm - 1]} ${ordinal(nd)} ${next.dataset.opp}`.toUpperCase();
     pride.forEach(el => { el.textContent = label; });
   };
