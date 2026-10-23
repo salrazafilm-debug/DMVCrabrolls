@@ -536,3 +536,17 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 .fs-cell small{font-size:11px}
 }
 @media(prefers-reduced-motion:reduce){.fs-slide{transition:none}}
+
+/* Round 16: original graphics shown uncropped; the two food shots stack and crossfade */
+.fs-food{display:grid;overflow:visible;height:auto;margin:0}
+.fs-food::before{display:none}
+.fs-food-mob{display:none}
+.fs-food>.fs-slide{grid-area:1/1;position:relative;opacity:0;transition:opacity 1.3s ease}
+.fs-food>.fs-slide.on{opacity:1}
+.fs-slide img{display:block;width:100%;height:auto;margin-top:0}
+.fs-next-line{font-family:var(--label);text-transform:uppercase;letter-spacing:1.5px;font-size:clamp(16px,1.8vw,22px);color:#fff;margin:26px 20px 0}
+.fs-next-line strong{color:var(--gold);font-weight:700}
+.fs-next-line span{color:#e2e8ee}
+@media(max-width:800px){.fs-food-desk{display:none}.fs-food-mob{display:grid}}
+.find-showcase{padding-bottom:40px}
+.fs-next-line{margin-bottom:22px}
