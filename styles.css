@@ -538,7 +538,6 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 @media(prefers-reduced-motion:reduce){.fs-slide{transition:none}}
 
 /* Round 16: original graphics shown uncropped; the two food shots stack and crossfade */
-.fs-food{display:grid;overflow:visible;height:auto;margin:0}
 .fs-food::before{display:none}
 .fs-food-mob{display:none}
 .fs-food>.fs-slide{grid-area:1/1;position:relative;opacity:0;transition:opacity 1.3s ease}
@@ -551,32 +550,26 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 .find-showcase{padding-bottom:40px}
 .fs-next-line{margin-bottom:22px}
 
-/* Round 17: the calendar block in the graphic is covered by a navy card with the live next game */
-.fs-food{container-type:inline-size}
-.fn-card{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:linear-gradient(rgba(7,30,51,.92),rgba(7,30,51,.82));border:1px solid rgba(255,202,39,.45);border-radius:6px;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:1.2cqw;z-index:2}
-.fn-card svg{width:9cqw;height:9cqw;color:#fff;margin-bottom:1cqw}
-.fn-card small{font-family:var(--label);font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-size:2.4cqw}
-.fn-card .fn-date{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:4.6cqw;line-height:1;margin:1cqw 0}
-.fn-card .fn-opp{font-family:var(--body);font-weight:600;font-size:2.6cqw;color:#e2e8ee}
-.fn-card .fn-time{font-family:var(--body);font-weight:600;font-size:2.4cqw;color:#e2e8ee}
-.fn-desk{left:63.1%;top:1.76%;width:12.4%;height:21.5%}
-.fn-mob{left:68.3%;top:1.24%;width:20.9%;height:18.4%}
-.fn-mob .fn-date{font-size:6.4cqw}
-.fn-mob svg{width:12cqw;height:12cqw}
-.fn-mob small{font-size:3.2cqw}
-.fn-mob .fn-opp,.fn-mob .fn-time{font-size:3.4cqw}
 @media(max-width:800px){.fn-desk{display:none}}
 @media(min-width:801px){.fn-mob{display:none}}
-/* fit the live card inside the calendar block on each size */
-.fn-card{padding:.5cqw;gap:0}
-.fn-card svg{width:3.4cqw;height:3.4cqw;margin-bottom:.4cqw}
-.fn-card small{font-size:1.25cqw;letter-spacing:.14em}
-.fn-card .fn-date{font-size:2.9cqw;margin:.3cqw 0;line-height:.95}
-.fn-card .fn-opp{font-size:1.65cqw;line-height:1.2}
-.fn-card .fn-time{font-size:1.55cqw;line-height:1.2}
-.fn-mob svg{width:6cqw;height:6cqw}
-.fn-mob small{font-size:2.1cqw}
-.fn-mob .fn-date{font-size:4.9cqw}
-.fn-mob .fn-opp,.fn-mob .fn-time{font-size:2.5cqw}
-.fn-desk .fn-date{font-size:2.45cqw}
-.fn-mob .fn-date{font-size:4.2cqw}
+
+/* Round 18: clean graphics, info overlaid on top in the original design */
+.find-showcase{background:#071e33;padding:0}
+.fs-food{position:relative;display:grid;overflow:hidden}
+.fs-food::after{content:'';position:absolute;inset:0 0 auto;height:34%;background:linear-gradient(rgba(3,23,44,.92),rgba(3,23,44,.55) 60%,transparent);z-index:1;pointer-events:none}
+.fs-food-mob{display:none}
+.fs-food>.fs-slide{grid-area:1/1;opacity:0;transition:opacity 1.3s ease}
+.fs-food>.fs-slide.on{opacity:1}
+.fs-slide img{display:block;width:100%;height:auto}
+.fs-info{position:absolute;top:0;left:0;right:0;z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:3.2% 4% 0;color:#fff;text-align:center}
+.fs-cell{display:flex;flex-direction:column;align-items:center;gap:.35em;padding:0 1.2%;border-left:2px solid rgba(255,202,39,.5)}
+.fs-cell:first-child{border-left:0}
+.fs-cell svg{width:2.6em;height:2.6em;color:#fff;margin-bottom:.1em}
+.fs-cell strong{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:1.02;font-size:clamp(18px,2.4vw,36px);letter-spacing:.5px}
+.fs-cell span{font-family:var(--body);font-weight:600;font-size:clamp(12px,1.2vw,17px);color:#e2e8ee}
+.fs-cell small{font-family:var(--label);font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-size:clamp(11px,1.1vw,15px)}
+.fs-next .fn-date{font-size:clamp(20px,2.6vw,40px)}
+@media(max-width:800px){.fs-food-desk{display:none}.fs-food-mob{display:grid}}
+@media(max-width:800px){.fs-info{padding:5% 3% 0}.fs-cell{gap:.2em}.fs-cell svg{width:1.9em;height:1.9em}.fs-cell strong{font-size:clamp(13px,4vw,20px)}.fs-cell span{font-size:clamp(10px,3vw,14px)}.fs-cell small{font-size:10px}.fs-next .fn-date{font-size:clamp(15px,5vw,24px)}}
+.find-showcase{padding-bottom:0}
+.fs-food{background:#071e33}
