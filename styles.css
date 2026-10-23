@@ -598,3 +598,18 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 @media(min-width:801px){.fs-food-desk{max-width:none;width:100%}}
 /* Round 21: no pause button; the ticket always floats */
 .entry-pass .entry-pass-float{animation:entry-pass-bob 6s ease-in-out infinite}
+
+/* Round 22: desktop shows the whole food photo uncropped; info sits in a band above it */
+@media(min-width:801px){
+.fs-food-desk{display:grid;grid-template-columns:100%;grid-template-rows:auto auto;height:auto;min-height:0;max-height:none;background:#071e33}
+.fs-food-desk::after{display:none}
+.fs-food-desk>.fs-info{position:relative;grid-area:1/1;top:auto;left:auto;right:auto;padding:2.2% 4% 1.6%;background:#071e33}
+.fs-food-desk>.fs-slide{position:relative;grid-area:2/1;inset:auto;height:auto;width:100%}
+.fs-food-desk>.fs-slide img{position:static;width:100%;height:auto;object-fit:contain}
+}
+@media(min-width:801px){
+.fs-food-desk>.fs-info{max-width:none;width:100%;margin:0;padding-left:4%;padding-right:4%}
+.fs-food-desk>.fs-slide{position:relative!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;inset:auto!important;height:auto!important}
+.fs-food-desk>.fs-slide img{position:relative!important;inset:auto!important;top:auto!important;height:auto!important;width:100%!important}
+.fs-food-desk>.fs-slide:not(.on){position:absolute!important;inset:0!important;top:0!important;grid-area:auto}
+}
