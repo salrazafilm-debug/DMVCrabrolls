@@ -71,9 +71,5 @@
       });
     }
   }
-  motionButton.addEventListener('click', () => {
-    paused = motionButton.getAttribute('aria-pressed') === 'true';
-    if (paused) { ticket.style.setProperty('--ticket-rx', '0deg'); ticket.style.setProperty('--ticket-ry', '0deg'); }
-  });
   reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) { ticket.style.setProperty('--ticket-rx', '0deg'); ticket.style.setProperty('--ticket-ry', '0deg'); } });
 })();
