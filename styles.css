@@ -732,3 +732,8 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 .fact-body{transition:grid-template-rows 350ms var(--ease-out)}
 .fact-tab i{transition:transform 250ms var(--ease-out)}
 @media(prefers-reduced-motion:reduce){.button:active,.carousel-pause:active,.schedule-toggle:active,.moments-toggle:active,.intro-skip:active,.fact-tab:active{transform:none}}
+
+/* Round 36: Section 141 food images are completely still. One photo per size, no crossfade, no float. */
+.fs-food .fs-slide{transition:none!important;animation:none!important}
+.fs-food .fs-slide:not(.on){display:none!important}
+.fs-food-mob .fs-slide img,.fs-food-desk .fs-slide img{animation:none!important;transition:none!important;transform:none!important}

@@ -214,16 +214,6 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
   refresh();
   setInterval(refresh, 60000);
 
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  document.querySelectorAll('.fs-food').forEach(box => {
-    const slides = [...box.querySelectorAll('.fs-slide')];
-    let i = 0;
-    setInterval(() => {
-      slides[i].classList.remove('on');
-      i = (i + 1) % slides.length;
-      slides[i].classList.add('on');
-    }, 5000);
-  });
 })();
 
 
