@@ -668,13 +668,18 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 .fs-food-desk .fs-info{background:linear-gradient(rgba(3,23,44,.82),rgba(3,23,44,.5) 70%,transparent)!important;padding-bottom:3svh!important}
 }
 
-/* Round 28: catering = poster on the left, 4:3 video on the right */
-.catering-feature{padding:90px 0 80px;background:#f4f8fc;color:var(--navy)}
-.cf-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,60px);align-items:center;max-width:1400px}
-.cf-poster{margin:0}
-.cf-poster img{display:block;width:100%;height:auto;border-radius:6px;box-shadow:0 18px 40px rgba(3,23,44,.18)}
-.cf-video{margin:0;aspect-ratio:4/3;width:100%;background:#03172c;border-radius:6px;overflow:hidden;box-shadow:0 18px 40px rgba(3,23,44,.25)}
-.cf-video video{display:block;width:100%;height:100%;object-fit:cover}
-.cf-actions{display:flex;justify-content:center;margin-top:36px}
+/* Round 29: catering = the exact template image, full width. The new video sits only over its blue panel (x 829 to 1903 of 1903). */
+.catering-feature{padding:0;background:#fff}
+.cf-template{position:relative;width:100%;aspect-ratio:1903/826;overflow:hidden}
+.cf-bg{display:block;width:100%;height:100%;object-fit:fill}
+.cf-slot{position:absolute;top:0;right:0;bottom:0;left:43.563%;width:56.437%;height:100%;object-fit:cover;background:#03172c}
+.cf-stack{display:none}
+.cf-actions{display:flex;justify-content:center;padding:28px 20px 40px}
 .cf-actions .button{background:var(--navy);color:#fff}
-@media(max-width:800px){.catering-feature{padding:60px 0}.cf-grid{grid-template-columns:1fr}.cf-poster{max-width:560px;margin:0 auto;width:100%}.cf-video{max-width:560px;margin:0 auto;width:100%}}
+@media(max-width:800px){
+.cf-template{display:none}
+.cf-stack{display:block}
+.cf-stack img{display:block;width:100%;height:auto}
+.cf-stack-video{aspect-ratio:4/3;width:100%;background:#03172c}
+.cf-stack-video video{display:block;width:100%;height:100%;object-fit:cover}
+}
