@@ -34,8 +34,6 @@ $('#previous-photo').addEventListener('click', () => displayPhoto(photoIndex - 1
 $('#next-photo').addEventListener('click', () => displayPhoto(photoIndex + 1));
 $('#photo-dialog').addEventListener('keydown', event => { if(event.key === 'ArrowLeft') { event.preventDefault(); displayPhoto(photoIndex - 1); } if(event.key === 'ArrowRight') { event.preventDefault(); displayPhoto(photoIndex + 1); } });
 
-const banner = document.querySelector(".pride-strip"), bannerPause = document.querySelector(".pride-pause");
-bannerPause.addEventListener("click", () => { const paused = banner.classList.toggle("is-paused"); bannerPause.setAttribute("aria-pressed", String(paused)); bannerPause.setAttribute("aria-label", paused ? "Play banner" : "Pause banner"); bannerPause.textContent = paused ? "▶" : "Ⅱ"; });
 
 /* Round 3: scroll fade, next home game, schedule highlight, Big 3 spotlight */
 (() => {
