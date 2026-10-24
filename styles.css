@@ -655,3 +655,15 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 .fs-food-desk>.fs-slide img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center center!important;margin:0!important}
 .fs-food-desk>.fs-info{position:absolute!important;top:0!important;left:0!important;right:0!important;padding:5svh 4% 0!important;z-index:3}
 }
+
+/* Round 27: bolder desktop info over the sky */
+@media(min-width:801px){
+.fs-food-desk .fs-info{text-shadow:0 3px 18px rgba(0,0,0,.9),0 1px 3px rgba(0,0,0,.8)}
+.fs-food-desk .fs-cell{border-left:3px solid #ffca27;padding:0 2%}
+.fs-food-desk .fs-cell strong{font-weight:400;font-size:clamp(40px,4.6vw,72px);letter-spacing:1px;color:#fff;-webkit-text-stroke:1px rgba(0,0,0,.35)}
+.fs-food-desk .fs-cell span{font-weight:700;font-size:clamp(18px,1.9vw,28px);color:#fff}
+.fs-food-desk .fs-cell small{font-weight:700;font-size:clamp(16px,1.7vw,24px);letter-spacing:.25em;color:#ffca27}
+.fs-food-desk .fs-cell svg{width:4.2em;height:4.2em;color:#ffca27;filter:drop-shadow(0 3px 10px rgba(0,0,0,.6))}
+.fs-food-desk .fs-next .fn-date{font-size:clamp(56px,6.2vw,104px);color:#ffca27}
+.fs-food-desk .fs-info{background:linear-gradient(rgba(3,23,44,.82),rgba(3,23,44,.5) 70%,transparent)!important;padding-bottom:3svh!important}
+}
