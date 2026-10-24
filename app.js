@@ -228,3 +228,18 @@ $('#photo-dialog').addEventListener('keydown', event => { if(event.key === 'Arro
     toggle.querySelector('span').textContent = open ? '↑' : '↓';
   });
 })();
+
+/* Section 141 food photos: crossfade every 5 seconds, one shared timer for desktop and phone */
+(() => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const boxes = [...document.querySelectorAll('.fs-food')];
+  if (!boxes.length) return;
+  let i = 0;
+  setInterval(() => {
+    i = (i + 1) % 2;
+    boxes.forEach(box => {
+      const slides = [...box.querySelectorAll('.fs-slide')];
+      slides.forEach((s, k) => s.classList.toggle('on', k === i));
+    });
+  }, 5000);
+})();
