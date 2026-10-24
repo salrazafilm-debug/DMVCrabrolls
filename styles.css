@@ -734,9 +734,7 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 @media(prefers-reduced-motion:reduce){.button:active,.carousel-pause:active,.schedule-toggle:active,.moments-toggle:active,.intro-skip:active,.fact-tab:active{transform:none}}
 
 /* Round 36: Section 141 food images are completely still. One photo per size, no crossfade, no float. */
-.fs-food .fs-slide{transition:none!important;animation:none!important}
-.fs-food .fs-slide:not(.on){display:none!important}
-.fs-food-mob .fs-slide img,.fs-food-desk .fs-slide img{animation:none!important;transition:none!important;transform:none!important}
+
 
 /* Round 37: one next-game line only (above the food). The bottom schedule block is hidden; its data still feeds the next-game line. */
 .schedule[hidden]{display:none!important}
@@ -744,11 +742,11 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 .footer-social a{font-family:var(--label);font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);font-size:16px}
 
 /* Round 38: crossfade restored. Both photos stack in one cell and fade; no display toggling, so the swap is smooth. */
-.fs-food{display:grid!important;position:relative;overflow:hidden}
+.fs-food{position:relative;overflow:hidden}
 .fs-food>.fs-slide{grid-area:1/1;position:relative!important;inset:auto!important;display:block!important;opacity:0;transition:opacity 1.2s ease-in-out;animation:none!important}
 .fs-food>.fs-slide.on{opacity:1}
 .fs-food>.fs-slide img{display:block;width:100%;height:auto;transition:none;animation:none!important;transform:none!important}
-.fs-food-desk{display:none}
-.fs-food-mob{display:grid}
-@media(min-width:801px){.fs-food-desk{display:grid}.fs-food-mob{display:none}}
+.fs-food-desk{display:grid}
+.fs-food-mob{display:none}
+@media(max-width:800px){.fs-food-desk{display:none}.fs-food-mob{display:grid}}
 @media(prefers-reduced-motion:reduce){.fs-food>.fs-slide{transition:none}}
