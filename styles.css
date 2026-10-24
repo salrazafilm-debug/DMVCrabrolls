@@ -714,3 +714,21 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 .truck-coming{background:#071e33;border-top:1px solid rgba(255,255,255,.12);border-bottom:0}
 .schedule{border-top:1px solid rgba(255,255,255,.12)}
 .site-footer{border-top:1px solid rgba(255,255,255,.12)}
+
+/* ===== Round 35: interaction polish. Strong ease-out, press feedback on everything pressable, hover only on devices that hover ===== */
+:root{--ease-out:cubic-bezier(.23,1,.32,1)}
+.button{transition:transform 160ms var(--ease-out),filter 160ms var(--ease-out),background-color 160ms var(--ease-out),color 160ms var(--ease-out)}
+.button:hover{transform:none;filter:none}
+.food-card:hover img{transform:none}
+.moment:hover img{transform:none}
+@media(hover:hover) and (pointer:fine){
+.button:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.food-card:hover img{transform:scale(1.035)}
+.moment:hover img{transform:scale(1.03)}
+}
+.food-photo img,.moment img{transition:transform 400ms var(--ease-out)}
+.button:active,.carousel-pause:active,.schedule-toggle:active,.moments-toggle:active,.intro-skip:active,.fact-tab:active,.nav-toggle:active,.pride-pause:active,.cf-mobile-cta .button:active{transform:scale(.97);transition-duration:100ms}
+.carousel-pause,.schedule-toggle,.moments-toggle,.intro-skip,.fact-tab,.nav-toggle,.pride-pause{transition:transform 160ms var(--ease-out),background-color 160ms var(--ease-out),color 160ms var(--ease-out),opacity 160ms var(--ease-out)}
+.fact-body{transition:grid-template-rows 350ms var(--ease-out)}
+.fact-tab i{transition:transform 250ms var(--ease-out)}
+@media(prefers-reduced-motion:reduce){.button:active,.carousel-pause:active,.schedule-toggle:active,.moments-toggle:active,.intro-skip:active,.fact-tab:active{transform:none}}
