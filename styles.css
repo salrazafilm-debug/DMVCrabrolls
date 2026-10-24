@@ -737,3 +737,8 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 .fs-food .fs-slide{transition:none!important;animation:none!important}
 .fs-food .fs-slide:not(.on){display:none!important}
 .fs-food-mob .fs-slide img,.fs-food-desk .fs-slide img{animation:none!important;transition:none!important;transform:none!important}
+
+/* Round 37: one next-game line only (above the food). The bottom schedule block is hidden; its data still feeds the next-game line. */
+.schedule[hidden]{display:none!important}
+.footer-social{display:flex;gap:22px;flex-wrap:wrap;margin-top:6px}
+.footer-social a{font-family:var(--label);font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);font-size:16px}
