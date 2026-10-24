@@ -668,18 +668,17 @@ html.intro-playing .intro-hero{min-height:0;display:flex}
 .fs-food-desk .fs-info{background:linear-gradient(rgba(3,23,44,.82),rgba(3,23,44,.5) 70%,transparent)!important;padding-bottom:3svh!important}
 }
 
-/* Round 29: catering = the exact template image, full width. The new video sits only over its blue panel (x 829 to 1903 of 1903). */
+/* Round 30: catering = ONE section. The template image is full width; one video covers its blue panel exactly. */
 .catering-feature{padding:0;background:#fff}
 .cf-template{position:relative;width:100%;aspect-ratio:1903/826;overflow:hidden}
 .cf-bg{display:block;width:100%;height:100%;object-fit:fill}
+.cf-poster-m{display:none}
 .cf-slot{position:absolute;top:0;right:0;bottom:0;left:43.563%;width:56.437%;height:100%;object-fit:cover;background:#03172c}
-.cf-stack{display:none}
 .cf-actions{display:flex;justify-content:center;padding:28px 20px 40px}
 .cf-actions .button{background:var(--navy);color:#fff}
 @media(max-width:800px){
-.cf-template{display:none}
-.cf-stack{display:block}
-.cf-stack img{display:block;width:100%;height:auto}
-.cf-stack-video{aspect-ratio:4/3;width:100%;background:#03172c}
-.cf-stack-video video{display:block;width:100%;height:100%;object-fit:cover}
+.cf-template{aspect-ratio:auto;overflow:visible}
+.cf-bg{display:none}
+.cf-poster-m{display:block;width:100%;height:auto}
+.cf-slot{position:static;display:block;width:100%;height:auto;aspect-ratio:4/3}
 }
