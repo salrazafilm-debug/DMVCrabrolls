@@ -225,3 +225,18 @@ bannerPause.addEventListener("click", () => { const paused = banner.classList.to
     }, 5000);
   });
 })();
+
+
+/* Moments: show the first four photos, "Show more" reveals the rest */
+(() => {
+  const toggle = document.querySelector('.moments-toggle');
+  const extra = [...document.querySelectorAll('.moment-more')];
+  if (!toggle || !extra.length) return;
+  toggle.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    extra.forEach(el => { el.hidden = !open; });
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.firstChild.textContent = open ? 'Show less ' : 'Show more ';
+    toggle.querySelector('span').textContent = open ? '↑' : '↓';
+  });
+})();
