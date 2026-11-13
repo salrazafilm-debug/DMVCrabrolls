@@ -799,7 +799,7 @@ html header,html.intro-playing header,html.intro-done header{position:fixed;top:
 .hd-low{color:#ffca27}
 .hd-caret{display:inline-block;width:.07em;height:.78em;margin-left:.06em;vertical-align:-.02em;background:currentColor;animation:hd-blink .75s steps(1) infinite}
 @keyframes hd-blink{50%{opacity:0}}
-.home-d-food{position:absolute;right:max(4%,calc((100vw - 1240px)/2 - 20px));bottom:4%;width:min(48%,760px);height:auto;z-index:1;filter:drop-shadow(0 1.4vw 1.4vw rgba(0,0,0,.55))}
+.home-d-food{position:absolute;left:50%;bottom:4%;width:min(46%,760px);height:auto;z-index:1;transform:translateX(-50%);filter:drop-shadow(0 1.4vw 1.4vw rgba(0,0,0,.55))}
 }
 @media(min-width:801px) and (prefers-reduced-motion:no-preference){
 .menu.js-reveal .menu-kicker,.menu.js-reveal .section-heading,.menu.js-reveal .section-intro,.menu.js-reveal .food-grid,.menu.js-reveal .menu-note{opacity:0;transform:translateY(36px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out)}
