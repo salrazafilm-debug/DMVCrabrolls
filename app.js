@@ -243,3 +243,14 @@ $('#photo-dialog').addEventListener('keydown', event => { if(event.key === 'Arro
     });
   }, 5000);
 })();
+
+
+/* Desktop header: clear over the hero photo, solid once the visitor scrolls past the first screen */
+(() => {
+  const header = document.querySelector('header');
+  if (!header) return;
+  let frame = 0;
+  const update = () => { frame = 0; header.classList.toggle('is-solid', window.scrollY > Math.max(120, window.innerHeight * 0.55)); };
+  window.addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
+  update();
+})();
