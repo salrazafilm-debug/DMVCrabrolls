@@ -801,3 +801,26 @@ html header,html.intro-playing header,html.intro-done header{position:fixed;top:
 .home-d-copy{top:17%}
 .home-d-food{bottom:3%;width:min(44%,780px)}
 }
+
+/* Round: seamless hero-to-menu blend. One torn edge only (the menu's own), shorter hero so "The Big 3" peeks in on the first screen. */
+.menu-kicker{display:none}
+@media(min-width:801px){
+.home-d{aspect-ratio:auto;height:calc(100svh - 150px);min-height:540px;max-height:none}
+.home-d-bg{height:118%;top:0;bottom:auto;object-fit:cover;object-position:center top}
+.hd-top,.hd-low{font-size:clamp(34px,5vw,92px)}
+.home-d-copy{top:14%}
+.home-d-food{bottom:5%;width:min(40%,700px);transform:translateX(-47%);filter:drop-shadow(0 1.2vw 1.2vw rgba(0,0,0,.5))}
+.menu{padding-top:6px;position:relative;z-index:3}
+.menu-kicker{display:block;text-align:center;margin:0 0 6px;font-family:var(--label);font-weight:700;font-size:clamp(15px,1.3vw,20px);letter-spacing:.32em;text-transform:uppercase;color:#7a1a22}
+.menu .section-heading{margin-top:0}
+}
+@media(min-width:801px){
+.home-d::before{content:'';position:absolute;left:50%;top:44%;width:58%;height:62%;transform:translateX(-50%);z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 52%,rgba(14,10,8,.96) 0%,rgba(14,10,8,.9) 38%,rgba(14,10,8,0) 72%)}
+.home-d-food{z-index:2}
+}
+.home-d-pool{display:none}
+@media(min-width:801px){
+.home-d::before{display:none}
+.home-d-bg{z-index:0}
+.home-d-pool{display:block;position:absolute;left:50%;top:40%;width:62%;height:66%;transform:translateX(-50%);z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 52%,rgba(12,9,7,1) 0%,rgba(12,9,7,.96) 45%,rgba(12,9,7,0) 74%)}
+}
