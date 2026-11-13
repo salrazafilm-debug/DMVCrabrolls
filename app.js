@@ -254,3 +254,36 @@ $('#photo-dialog').addEventListener('keydown', event => { if(event.key === 'Arro
   window.addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
   update();
 })();
+
+/* Desktop: the headline types in on load; the Big 3 only comes in once it scrolls into view */
+(() => {
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const desktop = matchMedia('(min-width: 801px)').matches;
+  const title = document.getElementById('home-d-title');
+  if (title && desktop && !reduced) {
+    const lines = [...title.querySelectorAll('.hd-top,.hd-low')];
+    const full = lines.map(l => l.textContent);
+    title.setAttribute('aria-label', full.join(' '));
+    const caret = document.createElement('span');
+    caret.className = 'hd-caret';
+    caret.setAttribute('aria-hidden', 'true');
+    lines.forEach(l => { l.textContent = ''; });
+    let row = 0, count = 0;
+    const type = () => {
+      lines[row].textContent = full[row].slice(0, ++count);
+      lines[row].appendChild(caret);
+      if (count < full[row].length) return setTimeout(type, 70);
+      row++; count = 0;
+      if (row < lines.length) return setTimeout(type, 260);
+      setTimeout(() => caret.remove(), 1400);
+    };
+    setTimeout(type, 350);
+  }
+  const menu = document.getElementById('menu');
+  if (menu && !reduced && 'IntersectionObserver' in window) {
+    menu.classList.add('js-reveal');
+    new IntersectionObserver((entries, io) => {
+      if (entries[0].isIntersecting) { menu.classList.add('is-in'); io.disconnect(); }
+    }, { threshold: 0.3 }).observe(menu);
+  }
+})();
