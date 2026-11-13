@@ -245,22 +245,21 @@ $('#photo-dialog').addEventListener('keydown', event => { if(event.key === 'Arro
 })();
 
 
-/* Desktop header: clear over the hero photo, solid once the visitor scrolls past the first screen */
+/* Header: clear over the hero photo, solid as soon as the visitor starts scrolling */
 (() => {
   const header = document.querySelector('header');
   if (!header) return;
   let frame = 0;
-  const update = () => { frame = 0; header.classList.toggle('is-solid', window.scrollY > Math.max(120, window.innerHeight * 0.55)); };
+  const update = () => { frame = 0; header.classList.toggle('is-solid', window.scrollY > 60); };
   window.addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
   update();
 })();
 
-/* Desktop: the headline types in on load; the Big 3 only comes in once it scrolls into view */
+/* Homepage: the headline types in on load, the hero drifts as you scroll, and the Big 3 comes in once it is on screen */
 (() => {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const desktop = matchMedia('(min-width: 801px)').matches;
   const title = document.getElementById('home-d-title');
-  if (title && desktop && !reduced) {
+  if (title && !reduced) {
     const lines = [...title.querySelectorAll('.hd-top,.hd-low')];
     const full = lines.map(l => l.textContent);
     title.setAttribute('aria-label', full.join(' '));
@@ -268,22 +267,37 @@ $('#photo-dialog').addEventListener('keydown', event => { if(event.key === 'Arro
     caret.className = 'hd-caret';
     caret.setAttribute('aria-hidden', 'true');
     lines.forEach(l => { l.textContent = ''; });
+    lines[0].appendChild(caret);
     let row = 0, count = 0;
     const type = () => {
       lines[row].textContent = full[row].slice(0, ++count);
       lines[row].appendChild(caret);
-      if (count < full[row].length) return setTimeout(type, 70);
+      if (count < full[row].length) return setTimeout(type, 62);
       row++; count = 0;
-      if (row < lines.length) return setTimeout(type, 260);
-      setTimeout(() => caret.remove(), 1400);
+      if (row < lines.length) return setTimeout(type, 240);
+      setTimeout(() => caret.remove(), 1500);
     };
-    setTimeout(type, 350);
+    // Wait for the headline font so letters don't change shape mid-type
+    const fontsReady = document.fonts && document.fonts.load ? document.fonts.load('400 1em "Bowlby One"') : Promise.resolve();
+    Promise.race([fontsReady, new Promise(r => setTimeout(r, 1200))]).then(() => setTimeout(type, 300));
+  }
+  const hero = document.querySelector('.home-d');
+  if (hero && !reduced) {
+    let frame = 0;
+    const drift = () => {
+      frame = 0;
+      const h = hero.offsetHeight || 1;
+      if (window.scrollY > h * 1.2) return;
+      hero.style.setProperty('--hp', Math.min(1, Math.max(0, window.scrollY / h)).toFixed(3));
+    };
+    window.addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(drift); }, { passive: true });
+    drift();
   }
   const menu = document.getElementById('menu');
   if (menu && !reduced && 'IntersectionObserver' in window) {
     menu.classList.add('js-reveal');
     new IntersectionObserver((entries, io) => {
       if (entries[0].isIntersecting) { menu.classList.add('is-in'); io.disconnect(); }
-    }, { threshold: 0.3 }).observe(menu);
+    }, { rootMargin: '0px 0px -18% 0px', threshold: 0.05 }).observe(menu);
   }
 })();
