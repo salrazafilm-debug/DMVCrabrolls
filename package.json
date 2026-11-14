@@ -1,0 +1,26 @@
+{
+  "name": "dmv-crabrolls-mumbo-commercial",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "compositions": "remotion compositions src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run typecheck && npm run compositions",
+    "render:preview": "remotion render src/index.ts MumboPreview out/mumbo-preview.mp4 --codec=h264 --crf=22",
+    "render:final": "remotion render src/index.ts MumboCommercial out/mumbo-commercial.mp4 --codec=h264 --crf=17",
+    "render:clean": "remotion render src/index.ts MumboClean out/mumbo-clean.mp4 --codec=h264 --crf=17"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.543",
+    "@remotion/renderer": "4.0.543",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.543"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "typescript": "7.0.2"
+  }
+}

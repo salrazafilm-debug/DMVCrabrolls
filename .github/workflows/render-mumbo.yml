@@ -1,0 +1,74 @@
+name: Render DMV Mumbo Commercial
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Which video should be rendered?
+        required: true
+        default: final
+        type: choice
+        options: [preview, final, clean]
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    name: Render ${{ inputs.version }} video
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the DMV Crabrolls project
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install exact dependencies
+        run: npm ci
+      - name: Install Remotion browser
+        run: npx remotion browser ensure
+      - name: Verify project before rendering
+        run: npm test
+      - name: Choose composition and output name
+        id: choice
+        shell: bash
+        run: |
+          case "${{ inputs.version }}" in
+            preview)
+              echo "composition=MumboPreview" >> "$GITHUB_OUTPUT"
+              echo "filename=dmv-mumbo-preview.mp4" >> "$GITHUB_OUTPUT"
+              echo "crf=22" >> "$GITHUB_OUTPUT"
+              ;;
+            clean)
+              echo "composition=MumboClean" >> "$GITHUB_OUTPUT"
+              echo "filename=dmv-mumbo-clean.mp4" >> "$GITHUB_OUTPUT"
+              echo "crf=17" >> "$GITHUB_OUTPUT"
+              ;;
+            final)
+              echo "composition=MumboCommercial" >> "$GITHUB_OUTPUT"
+              echo "filename=dmv-mumbo-commercial.mp4" >> "$GITHUB_OUTPUT"
+              echo "crf=17" >> "$GITHUB_OUTPUT"
+              ;;
+            *) echo "Unknown version: ${{ inputs.version }}" >&2; exit 1 ;;
+          esac
+      - name: Render H.264 MP4
+        run: >-
+          npx remotion render src/index.ts
+          "${{ steps.choice.outputs.composition }}"
+          "out/${{ steps.choice.outputs.filename }}"
+          --codec=h264 --pixel-format=yuv420p
+          --crf=${{ steps.choice.outputs.crf }} --log=verbose
+      - name: Show rendered media details
+        run: |
+          ls -lh "out/${{ steps.choice.outputs.filename }}"
+          ffprobe -v error -show_entries format=duration,size:stream=codec_name,codec_type,width,height -of json "out/${{ steps.choice.outputs.filename }}"
+      - name: Upload downloadable video
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.choice.outputs.filename }}
+          path: out/${{ steps.choice.outputs.filename }}
+          if-no-files-found: error
+          retention-days: 30

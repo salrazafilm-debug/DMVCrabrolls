@@ -1,3 +1,6 @@
 .taste-skill/
 .agents/
 .claude/
+node_modules/
+out/
+.remotion/
