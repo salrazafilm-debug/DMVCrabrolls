@@ -787,44 +787,111 @@ html header,html.intro-playing header,html.intro-done header{position:fixed;top:
 .menu .section-heading{margin-top:0}
 }
 
-/* ===== Homepage hero v4: one centered layout for desktop and phone, load sequence, scroll parallax ===== */
-.home-d{display:block;position:relative;overflow:hidden;isolation:isolate;background:#0b0908;height:100vh;height:100svh;min-height:600px;max-height:1000px;--hp:0}
-.home-d-bg{position:absolute;left:0;top:-3%;width:100%;height:106%;max-width:none;object-fit:cover;object-position:center 40%;z-index:0;filter:grayscale(.85) sepia(.35) contrast(.9) brightness(.82) blur(2px);scale:1.06;translate:0 calc(var(--hp) * 90px);animation:hd-bg 2.6s var(--ease-out) both}
-.home-d::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 80% 70% at 50% 55%,transparent 40%,rgba(0,0,0,.55) 100%),linear-gradient(rgba(0,0,0,.35),transparent 28%)}
-.home-d-glow{position:absolute;left:50%;bottom:4%;width:min(70vw,980px);aspect-ratio:1.6;translate:-50% 0;z-index:1;pointer-events:none;border-radius:50%;background:radial-gradient(closest-side,rgba(255,168,64,.30),rgba(237,7,24,.10) 55%,transparent);animation:hd-fade 1.8s ease-out .7s both,hd-breathe 7s ease-in-out 2.5s infinite}
-.home-d-copy{position:absolute;left:0;right:0;top:clamp(124px,17vh,184px);z-index:3;text-align:center;translate:0 calc(var(--hp) * -60px);opacity:calc(1 - var(--hp) * 1.4)}
-.home-d h1{margin:0;font-family:'Bowlby One','Anton',Impact,sans-serif;font-weight:400;text-transform:uppercase;line-height:.92;display:flex;flex-direction:column;align-items:center}
-.hd-top,.hd-low{display:block;min-height:.92em;font-size:clamp(40px,6.4vw,108px);letter-spacing:-.005em;transform:skewX(-8deg);white-space:nowrap;text-shadow:0 .05em 0 #8f0a17,0 .1em .35em rgba(0,0,0,.6)}
-.hd-top{color:#fff4dc}
-.hd-low{color:#ffca27}
-.hd-caret{display:inline-block;width:.07em;height:.78em;margin-left:.06em;vertical-align:-.02em;background:currentColor;animation:hd-blink .75s steps(1) infinite}
-.home-d-plate{position:absolute;left:50%;bottom:7%;width:min(44%,700px);z-index:2;translate:-50% calc(var(--hp) * 40px);animation:hd-rise 1.3s cubic-bezier(.2,.9,.25,1) .8s both}
-.home-d-food{display:block;width:100%;height:auto;filter:drop-shadow(0 1.6vw 1.4vw rgba(0,0,0,.6));animation:hd-float 6.5s ease-in-out 2.2s infinite}
-.home-d-cue{position:absolute;left:50%;bottom:44px;translate:-50% 0;z-index:3;display:inline-flex;align-items:center;gap:6px;font-family:var(--label);font-weight:700;font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:#fff4dc;opacity:.85;padding:8px 12px;animation:hd-fade 1s ease-out 2.6s both}
-.home-d-cue svg{color:#ffca27;animation:hd-nudge 1.8s ease-in-out 3.2s infinite}
-.home-d-cue:hover{opacity:1;color:#ffca27}
-@keyframes hd-bg{from{opacity:0;scale:1.16}to{opacity:1;scale:1.06}}
-@keyframes hd-fade{from{opacity:0}to{opacity:1}}
-@keyframes hd-rise{from{opacity:0;transform:translateY(70px) scale(.88) rotate(-4deg)}to{opacity:1;transform:none}}
-@keyframes hd-float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(.6deg)}}
-@keyframes hd-breathe{0%,100%{opacity:1}50%{opacity:.7}}
-@keyframes hd-nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
-@keyframes hd-blink{50%{opacity:0}}
+/* ===== Homepage hero v5: "The best food" on top, food in the middle, "In the land" below it ===== */
+.home-d{display:block;position:relative;overflow:hidden;isolation:isolate;background:#0b0908;--hp:0}
+.home-d picture{display:contents}
+.home-d-bg{position:absolute;left:0;top:-3%;width:100%;height:106%;max-width:none;object-fit:cover;object-position:center 40%;z-index:0;scale:1.06;translate:0 calc(var(--hp) * 90px)}
+.home-d::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none}
+.home-d-glow{position:absolute;left:50%;top:58%;width:min(78vw,1000px);aspect-ratio:1.6;translate:-50% -50%;z-index:1;pointer-events:none;border-radius:50%;background:radial-gradient(closest-side,rgba(255,168,64,.30),rgba(237,7,24,.10) 55%,transparent)}
+.home-d-stack{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;translate:0 calc(var(--hp) * -50px);opacity:calc(1 - var(--hp) * 1.2)}
+.home-d h1{display:contents;font-weight:400}
+.home-d-logo{order:-3;display:none}
+.home-d-tag{order:-2;display:flex;align-items:center;gap:10px;margin:0;font:700 var(--tag-fs,15px)/1 var(--label);letter-spacing:.3em;text-transform:uppercase;color:#ffca27;text-shadow:0 2px 6px rgba(0,0,0,.6)}
+.home-d-tag b{font-weight:700}
+.home-d-tag::before,.home-d-tag::after{content:'';width:42px;height:2px;background:currentColor}
+.hd-line1,.hd-c{position:relative;display:block;font-family:'Bowlby One','Anton',Impact,sans-serif;font-weight:400;text-transform:uppercase;line-height:.92;white-space:nowrap;transform:skewX(-8deg);text-shadow:0 .05em 0 #8f0a17,0 .1em .35em rgba(0,0,0,.6)}
+.hd-line1{order:-1;z-index:1;color:#fff4dc}
+.hd-c{order:1;z-index:3;color:#ffca27}
+.hd-a,.hd-b{display:inline}
+.home-d-plate{order:0;position:relative;z-index:2;animation:hd-rise 1.3s cubic-bezier(.2,.9,.25,1) .5s both}
+.home-d-food{display:block;width:100%;height:auto;filter:drop-shadow(0 18px 18px rgba(0,0,0,.6));animation:hd-float 6.5s ease-in-out 2.2s infinite}
+.home-d .w,.home-d .wi,.home-d .ch{display:inline-block}
+.home-d.hd-wait .hd-line1 .w,.home-d.hd-wait .hd-c .w{opacity:0}
 
-/* Phone: same layout, sized down; header sits clear over the photo and turns solid on scroll */
+/* Desktop: keep the faded vintage look; sizes follow both width and height so everything fits one screen */
+@media(min-width:801px){
+.home-d{height:calc(100vh - 54px);height:calc(100svh - 54px);min-height:600px;max-height:1000px;--fs:min(6.2vw,10svh,104px);--fw:min(44vw,74svh,740px)}
+.home-d-bg{filter:grayscale(.85) sepia(.35) contrast(.9) brightness(.82) blur(2px)}
+.home-d::after{background:radial-gradient(ellipse 80% 70% at 50% 55%,transparent 40%,rgba(0,0,0,.55) 100%),linear-gradient(rgba(0,0,0,.35),transparent 28%)}
+.home-d-stack{height:100%;justify-content:center;padding:112px 20px 18px}
+.home-d-tag{margin-bottom:12px}
+.hd-line1,.hd-c{font-size:var(--fs)}
+.home-d-plate{width:var(--fw);margin-top:calc(var(--fs) * -.06)}
+.hd-c{margin-top:calc(var(--fs) * -.62)}
+/* Gold bar sweeps each line, the words flicker on behind it like a sign lighting up */
+.hd-line1::after,.hd-c::after{content:'';position:absolute;inset:.04em -.12em .02em;background:#ffca27;transform:scaleX(0);pointer-events:none}
+.home-d.hd-go .hd-line1::after,.home-d.hd-go .hd-c::after{animation:hd-wipe .85s cubic-bezier(.7,0,.3,1) both;animation-delay:var(--d)}
+.home-d.hd-go .hd-line1 .w,.home-d.hd-go .hd-c .w{animation:hd-flick 1.5s linear both;animation-delay:var(--d)}
+.hd-line1{--d:.25s}
+.hd-c{--d:1.05s}
+}
+@keyframes hd-wipe{0%{transform:scaleX(0);transform-origin:left}50%{transform:scaleX(1);transform-origin:left}50.01%{transform-origin:right}100%{transform:scaleX(0);transform-origin:right}}
+@keyframes hd-flick{0%,27%{opacity:0;text-shadow:none}28%{opacity:1;text-shadow:0 0 .25em rgba(255,214,90,.95),0 0 .7em rgba(255,150,30,.7)}32%{opacity:.25}36%{opacity:1}40%{opacity:.45}45%{opacity:1;text-shadow:0 0 .25em rgba(255,214,90,.9),0 0 .7em rgba(255,150,30,.6)}100%{opacity:1}}
+
+/* Phone: Game Night. Logo on top, big FOOD tucked behind the box, stadium on both sides */
 @media(max-width:800px){
-.home-d{min-height:560px;max-height:none}
-.home-d-bg{object-position:24% 40%}
-.home-d-copy{top:max(104px,15svh)}
-.hd-top,.hd-low{font-size:clamp(30px,9.6vw,60px)}
-.home-d-plate{width:min(94%,540px);bottom:21%}
-.home-d-glow{width:130vw;bottom:10%}
-.home-d-cue{bottom:40px;font-size:13px}
+.home-d{height:auto;padding:76px 0 22px;background:#06101f}
+.home-d-bg{object-position:center 35%;filter:grayscale(.35) sepia(.2) brightness(.78) blur(1px)}
+.home-d::after{background:linear-gradient(180deg,rgba(3,23,44,.88),rgba(3,23,44,.2) 38%,rgba(3,23,44,.3) 70%,rgba(3,23,44,.96))}
+.home-d-glow{top:62%;width:140vw}
+.home-d-logo{display:block;width:min(38vw,170px);height:auto;margin-bottom:10px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.6))}
+.home-d-tag{--tag-fs:13px;margin-bottom:6px}
+.home-d-tag::before,.home-d-tag::after{width:30px}
+.hd-line1{color:#fff4dc}
+.hd-a{display:block;font-size:min(11.5vw,52px);color:#ffca27}
+.hd-b{display:block;font-size:min(29vw,136px);line-height:.88}
+.home-d-plate{width:min(92vw,520px);margin-top:min(-8vw,-36px)}
+.hd-c{font-size:min(11.5vw,52px);margin-top:min(-6vw,-26px)}
+.home-d.hd-go .ch{animation:hd-wave .7s cubic-bezier(.2,.9,.2,1) both;animation-delay:calc(.25s + var(--i) * 26ms)}
+.home-d.hd-wait .hd-line1 .w,.home-d.hd-wait .hd-c .w{opacity:1}
+.home-d.hd-wait .ch{opacity:0}
+/* The hero has its own big logo, so the header mark only appears once the page scrolls */
+html header:not(.is-solid) .brand-mark{opacity:0}
+.brand-mark{transition:opacity 250ms var(--ease-out)}
 html header,html.intro-playing header,html.intro-done header{position:fixed;top:0;left:0;right:0;height:72px;padding:0 14px 0 16px;background:transparent;border-bottom:0;transform:none;opacity:1;pointer-events:auto;transition:background-color 250ms var(--ease-out)}
 html body header.is-solid,html body header:has(nav.open){background:rgba(3,23,44,.97)}
+html body header:has(nav.open) .brand-mark{opacity:1}
 .brand .mini-logo,.brand .brand-text{display:none}
 .brand-mark{display:block;height:58px;width:auto;filter:drop-shadow(0 3px 8px rgba(0,0,0,.6))}
 nav{top:72px}
+}
+@keyframes hd-wave{from{opacity:0;transform:translateY(.55em) rotate(8deg);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes hd-rise{from{opacity:0;transform:translateY(70px) scale(.88) rotate(-4deg)}to{opacity:1;transform:none}}
+@keyframes hd-float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(.6deg)}}
+
+/* ===== DC · MD · VA moving banner between the hero and the Big 3 ===== */
+.dmv-ticker{position:relative;z-index:4;overflow:hidden;background:#b1081b;border-block:3px solid #ffca27;padding-block:10px;line-height:1}
+.tk-track{display:flex;width:max-content;animation:tk-move 30s linear infinite}
+.dmv-ticker:hover .tk-track{animation-play-state:paused}
+.tk-group{display:flex;align-items:center;flex-shrink:0}
+.tk-item{display:inline-flex;align-items:center;gap:12px;padding:0 22px;font:italic 700 26px/1 var(--label);letter-spacing:.06em;text-transform:uppercase;color:#fff4dc}
+.tk-item img{width:40px;height:27px;object-fit:cover;border-radius:2px;box-shadow:0 0 0 2px #fff4dc,0 3px 8px rgba(0,0,0,.35)}
+.dmv-ticker b{color:#ffca27;font-size:18px}
+@keyframes tk-move{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.dmv-ticker + .menu::before{display:none}
+@media(max-width:800px){.tk-item{font-size:20px;padding:0 16px;gap:10px}.tk-item img{width:32px;height:21px}.dmv-ticker{padding-block:8px}.tk-track{animation-duration:22s}}
+
+/* ===== Big 3 ===== */
+.menu-kicker{display:flex;align-items:center;justify-content:center;gap:6px;text-align:center;margin:0 0 4px;font-family:var(--label);font-weight:700;font-size:15px;letter-spacing:.28em;text-transform:uppercase;color:#7a1a22}
+@media(min-width:801px){.menu-kicker{font-size:clamp(15px,1.3vw,20px)}}
+/* Phone: Game Night navy, three photos in a row with the name over each */
+@media(max-width:800px){
+.menu.paper{background:#03172c;color:#fff4dc;padding:18px 0 36px}
+.menu::before{display:none}
+.menu-kicker{color:#ffca27;font-size:13px;letter-spacing:.26em}
+.menu .section-heading{gap:12px}
+.menu #menu-title{color:#fff4dc;text-shadow:3px 4px 0 #b1081b;font-size:clamp(46px,13vw,64px)}
+.menu .region-flag,.menu .line,.menu .section-intro{display:none}
+.menu .food-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;overflow:visible;scroll-snap-type:none;padding:14px 14px 0;margin:0;width:auto}
+.menu .food-grid::before,.menu .food-grid::after{display:none}
+.menu .food-card,.menu .food-card.is-center{position:relative;flex:none;width:auto;padding:0;transform:none;opacity:1;border-radius:10px;overflow:hidden;scroll-snap-align:none}
+.menu .food-card .food-photo,.menu .food-card.is-center .food-photo{aspect-ratio:3/4;height:auto;box-shadow:none}
+.menu .food-photo img{object-position:center}
+.menu .food-label{display:none}
+.menu .food-card .food-description{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:22px 5px 7px;opacity:1;text-align:center;background:linear-gradient(transparent,rgba(0,0,0,.85))}
+.menu .food-description h3{margin:0;font:italic 700 15px/1.02 var(--label);text-transform:uppercase;color:#fff4dc}
+.menu .food-description p{display:none}
+.menu .menu-note{color:#aab9c7;margin-top:22px}
 }
 
 /* Big 3: heading, then cards, come in once the section scrolls into view */
@@ -832,22 +899,16 @@ nav{top:72px}
 .menu.js-reveal .menu-kicker,.menu.js-reveal .section-heading,.menu.js-reveal .section-intro,.menu.js-reveal .menu-note{opacity:0;translate:0 34px;transition:opacity .9s var(--ease-out),translate .9s var(--ease-out)}
 .menu.js-reveal .section-heading{transition-delay:.08s}
 .menu.js-reveal .section-intro{transition-delay:.16s}
-.menu.js-reveal.is-in .menu-kicker,.menu.js-reveal.is-in .section-heading,.menu.js-reveal.is-in .section-intro,.menu.js-reveal.is-in .menu-note{opacity:1;translate:0 0}
-}
-@media(min-width:801px) and (prefers-reduced-motion:no-preference){
-.menu.js-reveal .food-card{opacity:0;translate:0 60px;transition:opacity 1s var(--ease-out),translate 1s var(--ease-out)}
-.menu.js-reveal .food-card:nth-child(1){transition-delay:.25s}
-.menu.js-reveal .food-card:nth-child(2){transition-delay:.4s}
-.menu.js-reveal .food-card:nth-child(3){transition-delay:.55s}
-.menu.js-reveal.is-in .food-card{opacity:1;translate:0 0}
-}
-@media(max-width:800px) and (prefers-reduced-motion:no-preference){
-.menu.js-reveal .food-grid{opacity:0;translate:0 50px;transition:opacity 1s var(--ease-out) .25s,translate 1s var(--ease-out) .25s}
-.menu.js-reveal.is-in .food-grid{opacity:1;translate:0 0}
+.menu.js-reveal .food-card{opacity:0;translate:0 50px;transition:opacity 1s var(--ease-out),translate 1s var(--ease-out)}
+.menu.js-reveal .food-card:nth-child(1){transition-delay:.2s}
+.menu.js-reveal .food-card:nth-child(2){transition-delay:.33s}
+.menu.js-reveal .food-card:nth-child(3){transition-delay:.46s}
+.menu.js-reveal.is-in .menu-kicker,.menu.js-reveal.is-in .section-heading,.menu.js-reveal.is-in .section-intro,.menu.js-reveal.is-in .menu-note,.menu.js-reveal.is-in .food-card{opacity:1;translate:0 0}
 }
 @media(prefers-reduced-motion:reduce){
-.home-d-bg,.home-d-glow,.home-d-plate,.home-d-food,.home-d-cue,.home-d-cue svg{animation:none}
-.home-d-bg,.home-d-copy,.home-d-plate{translate:none}
-.home-d-plate{translate:-50% 0}
-.home-d-copy{opacity:1}
+.home-d-plate,.home-d-food,.tk-track{animation:none}
+.home-d-bg,.home-d-stack{translate:none}
+.home-d-stack{opacity:1}
+.tk-track{justify-content:center;width:100%}
+.tk-group[aria-hidden]{display:none}
 }

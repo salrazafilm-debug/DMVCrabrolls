@@ -87,64 +87,6 @@ $('#photo-dialog').addEventListener('keydown', event => { if(event.key === 'Arro
     findOpp.textContent = `${next.dataset.opp} · ${next.dataset.time}`;
   }
 
-  const track = document.querySelector('.menu .food-grid');
-  if (!track) return;
-  const cards = [...track.querySelectorAll('.food-card')];
-  const phone = matchMedia('(max-width: 600px)');
-  const pause = document.querySelector('.carousel-pause');
-  const interval = 4800;
-  let timer = 0, resumeTimer = 0, index = 0, userPaused = false, onScreen = false;
-
-  // Size and fade each card from its distance to the middle, so nothing snaps or pops while it moves.
-  const mark = () => {
-    if (!phone.matches) {
-      cards.forEach(card => { card.style.transform = ''; card.style.opacity = ''; card.classList.remove('is-center'); });
-      return;
-    }
-    const mid = track.clientWidth / 2;
-    let best = 0, bestGap = Infinity;
-    cards.forEach((card, i) => {
-      const gap = Math.abs(card.offsetLeft + card.offsetWidth / 2 - track.scrollLeft - mid);
-      const d = Math.min(1, gap / card.offsetWidth);
-      card.style.transform = `scale(${(1.16 - 0.3 * d).toFixed(3)})`;
-      card.style.opacity = (1 - 0.5 * d).toFixed(3);
-      if (gap < bestGap) { bestGap = gap; best = i; }
-    });
-    index = best;
-    cards.forEach((card, i) => card.classList.toggle('is-center', i === best));
-  };
-  const go = i => {
-    index = (i + cards.length) % cards.length;
-    const card = cards[index];
-    const left = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
-    track.scrollTo({ left, behavior: reduced.matches ? 'auto' : 'smooth' });
-  };
-  const halt = () => { clearInterval(timer); timer = 0; };
-  const start = () => {
-    halt();
-    if (userPaused || !onScreen || !phone.matches || reduced.matches) return;
-    timer = setInterval(() => go(index + 1), interval);
-  };
-  // A touch only pauses the show for a few seconds; the Pause button stops it until Play.
-  const touched = () => { halt(); clearTimeout(resumeTimer); };
-  const released = () => { clearTimeout(resumeTimer); resumeTimer = setTimeout(start, 5000); };
-  ['pointerdown', 'touchstart', 'wheel'].forEach(type => track.addEventListener(type, touched, { passive: true }));
-  ['pointerup', 'pointercancel', 'touchend', 'touchcancel'].forEach(type => track.addEventListener(type, released, { passive: true }));
-  if (pause) pause.addEventListener('click', () => {
-    userPaused = !userPaused;
-    pause.setAttribute('aria-pressed', String(userPaused));
-    pause.textContent = userPaused ? 'Play the spotlight' : 'Pause the spotlight';
-    if (userPaused) { halt(); clearTimeout(resumeTimer); } else start();
-  });
-
-  let scrollFrame = 0;
-  track.addEventListener('scroll', () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(() => { scrollFrame = 0; mark(); }); }, { passive: true });
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(entries => { onScreen = entries[0].isIntersecting; if (onScreen) start(); else halt(); }, { threshold: 0.25 }).observe(track);
-  } else { onScreen = true; start(); }
-  phone.addEventListener('change', () => { mark(); start(); });
-  mark();
-  window.addEventListener('resize', mark);
 })();
 
 /* Fun fact: a tab pokes out at the bottom of the owner section and opens as you scroll to it */
@@ -255,33 +197,31 @@ $('#photo-dialog').addEventListener('keydown', event => { if(event.key === 'Arro
   update();
 })();
 
-/* Homepage: the headline types in on load, the hero drifts as you scroll, and the Big 3 comes in once it is on screen */
+/* Homepage: the headline animates in on load, the hero drifts as you scroll, and the Big 3 comes in once it is on screen */
 (() => {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const title = document.getElementById('home-d-title');
-  if (title && !reduced) {
-    const lines = [...title.querySelectorAll('.hd-top,.hd-low')];
-    const full = lines.map(l => l.textContent);
-    title.setAttribute('aria-label', full.join(' '));
-    const caret = document.createElement('span');
-    caret.className = 'hd-caret';
-    caret.setAttribute('aria-hidden', 'true');
-    lines.forEach(l => { l.textContent = ''; });
-    lines[0].appendChild(caret);
-    let row = 0, count = 0;
-    const type = () => {
-      lines[row].textContent = full[row].slice(0, ++count);
-      lines[row].appendChild(caret);
-      if (count < full[row].length) return setTimeout(type, 62);
-      row++; count = 0;
-      if (row < lines.length) return setTimeout(type, 240);
-      setTimeout(() => caret.remove(), 1500);
-    };
-    // Wait for the headline font so letters don't change shape mid-type
-    const fontsReady = document.fonts && document.fonts.load ? document.fonts.load('400 1em "Bowlby One"') : Promise.resolve();
-    Promise.race([fontsReady, new Promise(r => setTimeout(r, 1200))]).then(() => setTimeout(type, 300));
-  }
   const hero = document.querySelector('.home-d');
+  if (hero && !reduced) {
+    // Split the headline into words and letters; desktop sweeps and flickers each line, phone waves each letter in
+    let i = 0;
+    hero.querySelectorAll('.hd-a,.hd-b,.hd-c').forEach(part => {
+      const words = part.textContent.trim().split(/\s+/);
+      part.textContent = '';
+      words.forEach((word, n) => {
+        const w = document.createElement('span'); w.className = 'w';
+        const inner = document.createElement('span'); inner.className = 'wi';
+        [...word].forEach(c => { const ch = document.createElement('span'); ch.className = 'ch'; ch.textContent = c; ch.style.setProperty('--i', i++); inner.appendChild(ch); });
+        w.appendChild(inner); part.appendChild(w);
+        if (n < words.length - 1) part.appendChild(document.createTextNode(' '));
+      });
+    });
+    hero.classList.add('hd-wait');
+    const fontsReady = document.fonts && document.fonts.load ? document.fonts.load('400 1em "Bowlby One"') : Promise.resolve();
+    Promise.race([fontsReady, new Promise(r => setTimeout(r, 1200))]).then(() => {
+      hero.classList.add('hd-go');
+      hero.classList.remove('hd-wait');
+    });
+  }
   if (hero && !reduced) {
     let frame = 0;
     const drift = () => {
@@ -298,6 +238,6 @@ $('#photo-dialog').addEventListener('keydown', event => { if(event.key === 'Arro
     menu.classList.add('js-reveal');
     new IntersectionObserver((entries, io) => {
       if (entries[0].isIntersecting) { menu.classList.add('is-in'); io.disconnect(); }
-    }, { rootMargin: '0px 0px -18% 0px', threshold: 0.05 }).observe(menu);
+    }, matchMedia('(max-width: 800px)').matches ? { threshold: 0 } : { rootMargin: '0px 0px -18% 0px', threshold: 0.05 }).observe(menu);
   }
 })();
